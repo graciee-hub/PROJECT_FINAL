@@ -4,1451 +4,633 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ambaguio High School - Grade 10 Enrollment System</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-/* MAIN CONTAINER */
-.portrait-app {
-    width: 100%;
-    max-width: 420px;
-    min-height: 100vh;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: 0 0 15px rgba(0,0,0,0.05);
-}
-
-/* NAVIGATION BAR */
-.navbar {
-    background: #1e3a8a;
-    color: #ffffff;
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.nav-logo-container {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.school-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #ffffff;
-    padding: 2px;
-}
-
-.brand {
-    flex: 1;
-    text-align: center;
-}
-
-.brand h2 {
-    font-size: 1.05rem;
-    line-height: 1.2;
-}
-
-.brand span {
-    font-size: 0.72rem;
-    color: #93c5fd;
-}
-
-/* HAMBURGER MENU */
-.menu-wrapper {
-    position: relative;
-    display: block;
-}
-
-.menu-toggle-btn {
-    background: #e0f2fe;
-    border: 1px solid #bae6fd;
-    color: #0369a1;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 48px;
-    background: #ffffff;
-    width: 270px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    border-radius: 12px;
-    overflow: hidden;
-    z-index: 1000;
-    border: 1px solid #e2e8f0;
-}
-
-.dropdown-menu.show {
-    display: block;
-}
-
-/* PROFILE HEADER */
-.profile-header {
-    background: #f8fafc;
-    padding: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #e2e8f0;
-    cursor: pointer;
-}
-
-.profile-header:hover {
-    background: #eff6ff;
-}
-
-.profile-avatar {
-    width: 42px;
-    height: 42px;
-    background: #1e3a8a;
-    color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.profile-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-name {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #0f172a;
-}
-
-.profile-role {
-    font-size: 0.75rem;
-    color: #64748b;
-}
-
-/* DROPDOWN ITEMS */
-.dropdown-category {
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #94a3b8;
-    padding: 10px 14px 4px;
-    letter-spacing: 0.5px;
-}
-
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    color: #334155;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-}
-
-.dropdown-item:hover {
-    background: #f1f5f9;
-    color: #1e3a8a;
-}
-
-.dropdown-item i {
-    width: 18px;
-    text-align: center;
-    color: #64748b;
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: #e2e8f0;
-    margin: 2px 0;
-}
-
-/* MAIN CONTENT */
-.portrait-body {
-    flex: 1;
-    padding: 16px;
-}
-
-.card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    margin-bottom: 16px;
-    border: 1px solid #f1f5f9;
-}
-
-.subtitle {
-    color: #64748b;
-    font-size: 0.82rem;
-    margin-bottom: 12px;
-}
-
-.section-header {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    margin: 14px 0 8px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-hr {
-    border: 0;
-    height: 1px;
-    background: #e2e8f0;
-    margin-bottom: 14px;
-}
-
-/* PAGE NAVIGATION */
-.view-section {
-    display: none;
-}
-
-.view-section.active-section {
-    display: block;
-}
-
-/* FORM */
-.form-portrait {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: #334155;
-}
-
-.form-group input,
-.form-group select {
-    padding: 9px 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    font-size: 0.88rem;
-    width: 100%;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
-}
-
-/* DOCUMENT UPLOAD */
-.document-upload-item {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 10px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.document-upload-item input[type="file"] {
-    font-size: 0.78rem;
-    padding: 4px;
-    background: #fff;
-}
-
-.checkbox-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 4px;
-}
-
-.checkbox-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #334155;
-}
-
-/* PORTAL SIGN IN BUTTON */
-.signin-entry {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    margin-top: 12px;
-    padding: 10px 14px;
-    border: 1px solid #bfdbfe;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #1e40af;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.signin-entry:hover {
-    background: #eff6ff;
-}
-
-/* HOME PAGE */
-.tile-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.tile-item {
-    background: #f8fafc;
-    border: 1.5px solid #e2e8f0;
-    padding: 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.tile-item:hover {
-    border-color: #60a5fa;
-    background: #eff6ff;
-}
-
-.tile-item i {
-    font-size: 1.4rem;
-    color: #2563eb;
-}
-
-.tile-item h3 {
-    font-size: 0.9rem;
-    color: #0f172a;
-}
-
-/* BUTTONS */
-.btn {
-    padding: 11px 16px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.btn-primary {
-    background: #e0f2fe;
-    border-color: #bae6fd;
-    color: #0369a1;
-    width: 100%;
-}
-
-.btn-primary:hover {
-    background: #bae6fd;
-}
-
-.btn-success {
-    background: #dcfce7;
-    border-color: #bbf7d0;
-    color: #15803d;
-    width: 100%;
-    margin-top: 6px;
-}
-
-/* STATUS BADGES */
-.badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 10px;
-    font-size: 0.72rem;
-    font-weight: 700;
-}
-
-.pending {
-    background: #fef3c7;
-    color: #d97706;
-}
-
-.accepted {
-    background: #d1fae5;
-    color: #059669;
-}
-
-.rejected {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-/* APPLICATION STATUS */
-.status-panel {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 16px;
-    margin-top: 14px;
-}
-
-.status-heading {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    margin-bottom: 8px;
-}
-
-.status-message {
-    color: #475569;
-    font-size: 0.85rem;
-    line-height: 1.6;
-    margin-top: 10px;
-}
-
-.status-reference {
-    font-size: 0.78rem;
-    color: #64748b;
-    margin-top: 8px;
-    overflow-wrap: anywhere;
-}
-
-/* ADMIN PORTAL */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.8rem;
-    margin-top: 10px;
-}
-
-.data-table th,
-.data-table td {
-    border: 1px solid #e2e8f0;
-    padding: 8px 6px;
-    text-align: left;
-    vertical-align: top;
-}
-
-.data-table th {
-    background: #f8fafc;
-}
-
-.status-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 70px;
-}
-
-.btn-small {
-    padding: 6px 8px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.72rem;
-    font-weight: 700;
-}
-
-.btn-accept {
-    background: #dcfce7;
-    color: #15803d;
-}
-
-.btn-reject {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-.admin-empty {
-    text-align: center;
-    padding: 18px;
-    color: #64748b;
-}
-
-/* CONTACT */
-.contact-card {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
-
-/* MOBILE RESPONSIVE */
-@media(max-width:360px) {
-    .navbar {
-        padding: 10px;
-        gap: 5px;
-    }
-
-    .school-logo {
-        width: 34px;
-        height: 34px;
-    }
-
-    .brand h2 {
-        font-size: 0.9rem;
-    }
-
-    .brand span {
-        font-size: 0.65rem;
-    }
-
-    .dropdown-menu {
-        width: 250px;
-    }
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body{background:#fff;display:flex;justify-content:center;min-height:100vh}
+.portrait-app{width:100%;max-width:420px;min-height:100vh;background:#fff;display:flex;flex-direction:column;position:relative;box-shadow:0 0 15px rgba(0,0,0,.05)}
+.navbar{background:#1e3a8a;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;gap:10px}
+.nav-logo-container{display:flex;align-items:center;gap:6px}
+.school-logo{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#fff;padding:2px}
+.brand{flex:1;text-align:center}
+.brand h2{font-size:1.05rem;line-height:1.2}
+.brand span{font-size:.72rem;color:#93c5fd}
+.menu-wrapper{position:relative;display:block}
+.menu-toggle-btn{background:#e0f2fe;border:1px solid #bae6fd;color:#0369a1;width:38px;height:38px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer}
+.dropdown-menu{display:none;position:absolute;right:0;top:48px;background:#fff;width:270px;box-shadow:0 10px 25px rgba(0,0,0,.15);border-radius:12px;overflow:hidden;z-index:1000;border:1px solid #e2e8f0}
+.dropdown-menu.show{display:block}
+.profile-header{background:#f8fafc;padding:14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #e2e8f0}
+.profile-avatar{width:42px;height:42px;background:#1e3a8a;color:#fff;border-radius:50%;display:flex;justify-content:center;align-items:center}
+.profile-info{display:flex;flex-direction:column}
+.profile-name{font-size:.9rem;font-weight:700;color:#0f172a}
+.profile-role{font-size:.75rem;color:#64748b}
+.dropdown-category{font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;padding:10px 14px 4px;letter-spacing:.5px}
+.dropdown-item{display:flex;align-items:center;gap:10px;padding:10px 14px;color:#334155;font-size:.85rem;font-weight:500;cursor:pointer;border:0;background:none;width:100%;text-align:left}
+.dropdown-item:hover{background:#f1f5f9;color:#1e3a8a}
+.dropdown-item i{width:18px;text-align:center;color:#64748b}
+.dropdown-divider{height:1px;background:#e2e8f0;margin:2px 0}
+.portrait-body{flex:1;padding:16px}
+.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:16px;border:1px solid #f1f5f9}
+.subtitle{color:#64748b;font-size:.82rem;margin-bottom:12px}
+.section-header{font-size:.95rem;font-weight:700;color:#1e3a8a;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid #e2e8f0}
+hr{border:0;height:1px;background:#e2e8f0;margin-bottom:14px}
+.view-section{display:none}
+.view-section.active-section{display:block}
+.form-portrait{display:flex;flex-direction:column;gap:12px}
+.form-group{display:flex;flex-direction:column}
+.form-group label{font-size:.82rem;font-weight:600;margin-bottom:4px;color:#334155}
+.form-group input,.form-group select{padding:9px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:.88rem;width:100%}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:#3b82f6}
+.document-upload-item{background:#f8fafc;border:1px solid #e2e8f0;padding:10px;border-radius:8px;display:flex;flex-direction:column;gap:6px}
+.document-upload-item input[type=file]{font-size:.78rem;padding:4px;background:#fff}
+.checkbox-group{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.checkbox-item{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:#334155}
+.tile-grid{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.tile-item{background:#f8fafc;border:1.5px solid #e2e8f0;padding:14px;border-radius:10px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s}
+.tile-item:hover{border-color:#60a5fa;background:#eff6ff}
+.tile-item i{font-size:1.4rem;color:#2563eb}
+.tile-item h3{font-size:.9rem;color:#0f172a}
+.btn{padding:11px 16px;border:1px solid transparent;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem}
+.btn-primary{background:#e0f2fe;border-color:#bae6fd;color:#0369a1;width:100%}
+.btn-primary:hover{background:#bae6fd}
+.btn-success{background:#dcfce7;border-color:#bbf7d0;color:#15803d;width:100%;margin-top:6px}
+.badge{display:inline-block;padding:5px 9px;border-radius:10px;font-size:.72rem;font-weight:700}
+.pending{background:#fef3c7;color:#d97706}
+.accepted{background:#d1fae5;color:#059669}
+.rejected{background:#fee2e2;color:#b91c1c}
+.status-panel{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-top:14px}
+.status-heading{font-size:1rem;font-weight:700;color:#1e3a8a;margin-bottom:8px}
+.status-message{color:#475569;font-size:.85rem;line-height:1.6;margin-top:10px}
+.status-reference{font-size:.78rem;color:#64748b;margin-top:8px;overflow-wrap:anywhere}
+.data-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:10px}
+.data-table th,.data-table td{border:1px solid #e2e8f0;padding:8px 6px;text-align:left;vertical-align:top}
+.data-table th{background:#f8fafc}
+.status-actions{display:flex;flex-direction:column;gap:6px;min-width:70px}
+.btn-small{padding:6px 8px;border:0;border-radius:6px;cursor:pointer;font-size:.72rem;font-weight:700}
+.btn-accept{background:#dcfce7;color:#15803d}
+.btn-reject{background:#fee2e2;color:#b91c1c}
+.admin-empty{text-align:center;padding:18px;color:#64748b}
+.contact-card{background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:8px;margin-bottom:10px}
+@media(max-width:360px){
+.navbar{padding:10px;gap:5px}
+.school-logo{width:34px;height:34px}
+.brand h2{font-size:.9rem}
+.brand span{font-size:.65rem}
+.dropdown-menu{width:250px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="portrait-app">
 
-    <!-- NAVIGATION BAR -->
-    <nav class="navbar">
+<nav class="navbar">
+  <div class="nav-logo-container">
+    <img src="AMBAGUIO.jpg" alt="Ambaguio Logo" class="school-logo">
+    <img src="DEPED.jpg" alt="DepEd Logo" class="school-logo">
+  </div>
 
-        <div class="nav-logo-container">
-            <img src="AMBAGUIO.jpg"
-                 alt="Ambaguio Logo"
-                 class="school-logo">
+  <div class="brand">
+    <h2>Ambaguio High School</h2>
+    <span>Grade 10 Enrollment System</span>
+  </div>
 
-            <img src="DEPED.jpg"
-                 alt="DepEd Logo"
-                 class="school-logo">
+  <!-- HAMBURGER MENU: HIDDEN UNTIL SIGN IN -->
+  <div class="menu-wrapper" id="menuWrapper" style="display:none">
+    <button class="menu-toggle-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Open menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fa-solid fa-user" id="accountAvatarIcon"></i>
         </div>
 
-        <div class="brand">
-            <h2>Ambaguio High School</h2>
-            <span>Grade 10 Enrollment System</span>
+        <div class="profile-info">
+          <span class="profile-name" id="accountMenuName">Student</span>
+          <span class="profile-role" id="accountMenuRole">Student Account</span>
+        </div>
+      </div>
+
+      <button class="dropdown-item" onclick="handleLogout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+      </button>
+
+      <div class="dropdown-category">Navigation</div>
+
+      <button class="dropdown-item" onclick="navigateTo('home-view')">
+        <i class="fa-solid fa-house"></i> Home
+      </button>
+
+      <button class="dropdown-item" onclick="navigateTo('enroll-view')">
+        <i class="fa-solid fa-file-pen"></i> Enrollment Form
+      </button>
+
+      <button class="dropdown-item" onclick="navigateTo('status-view')">
+        <i class="fa-solid fa-clipboard-check"></i> Application Status
+      </button>
+
+      <button class="dropdown-item" onclick="navigateTo('admin-view')">
+        <i class="fa-solid fa-user-shield"></i> Admin Portal
+      </button>
+
+      <div class="dropdown-divider"></div>
+
+      <div class="dropdown-category">Information</div>
+
+      <button class="dropdown-item" onclick="navigateTo('about-view')">
+        <i class="fa-solid fa-school"></i> About AHS
+      </button>
+
+      <button class="dropdown-item" onclick="navigateTo('guidelines-view')">
+        <i class="fa-solid fa-list-check"></i> Enrollment Guidelines
+      </button>
+
+      <button class="dropdown-item" onclick="navigateTo('contact-view')">
+        <i class="fa-solid fa-headset"></i> Contact / Help Desk
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="portrait-body">
+
+<!-- PORTAL SIGN IN: FIRST PAGE -->
+<section id="login-view" class="view-section active-section card">
+  <h2 style="font-size:1.15rem;text-align:center;color:#1e3a8a">
+    Portal Sign In
+  </h2>
+
+  <p class="subtitle" style="text-align:center">
+    Enter your student name and Student ID/LRN to continue.
+  </p>
+
+  <hr>
+
+  <form class="form-portrait" onsubmit="handleLoginSubmit(event)">
+
+    <div class="form-group">
+      <label for="loginStudentName">Student Full Name:</label>
+      <input type="text"
+             id="loginStudentName"
+             placeholder="Enter your full name"
+             autocomplete="name"
+             required>
+    </div>
+
+    <div class="form-group">
+      <label for="loginLrn">Student ID / LRN:</label>
+      <input type="text"
+             id="loginLrn"
+             placeholder="Enter your 12-digit LRN"
+             inputmode="numeric"
+             pattern="[0-9]{12}"
+             maxlength="12"
+             required>
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top:10px">
+      <i class="fa-solid fa-right-to-bracket"></i> Log In
+    </button>
+
+  </form>
+
+  <p style="font-size:.75rem;color:#64748b;line-height:1.5;margin-top:12px">
+    Enter your name and 12-digit LRN to proceed to the enrollment homepage.
+  </p>
+</section>
+
+<!-- HOME PAGE: SHOWN AFTER SIGN IN -->
+<section id="home-view" class="view-section card">
+  <h2 style="font-size:1.15rem">Welcome to AHS</h2>
+  <p class="subtitle">Grade 10 Online Enrollment Portal</p>
+  <hr>
+
+  <p style="font-size:.85rem;line-height:1.5;color:#475569">
+    Welcome! Select Start Registration to fill out the Grade 10 enrollment form. After submitting, you can check your application status.
+  </p>
+
+  <div class="tile-grid">
+    <div class="tile-item" onclick="navigateTo('enroll-view')">
+      <i class="fa-solid fa-file-pen"></i>
+      <div>
+        <h3>Start Registration</h3>
+        <span style="font-size:.72rem;color:#64748b">Fill Out Grade 10 Form</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENROLLMENT FORM -->
+<section id="enroll-view" class="view-section card">
+  <h2 style="font-size:1.15rem">Grade 10 Registration</h2>
+  <p class="subtitle">Please complete all required information below.</p>
+
+  <form class="form-portrait" id="enrollmentForm" onsubmit="handleEnrollmentSubmit(event)">
+
+    <div class="section-header">1. Personal Details</div>
+
+    <div class="form-group">
+      <label>Learner Reference Number (LRN):</label>
+      <input type="text" name="lrn" placeholder="12-digit LRN" pattern="[0-9]{12}" maxlength="12" required>
+    </div>
+
+    <div class="form-group">
+      <label>Full Name:</label>
+      <input type="text" name="fullName" placeholder="Last Name, First Name, Middle Name" required>
+    </div>
+
+    <div class="form-group">
+      <label>Gender:</label>
+      <select name="gender" required>
+        <option value="">Select Gender</option>
+        <option>Female</option>
+        <option>Male</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Date of Birth:</label>
+      <input type="date" name="birthDate" required>
+    </div>
+
+    <div class="form-group">
+      <label>Nationality:</label>
+      <input type="text" name="nationality" value="Filipino" required>
+    </div>
+
+    <div class="form-group">
+      <label>Mother Tongue / Dialect:</label>
+      <input type="text" name="motherTongue" placeholder="e.g. Ibaloi, Ifugao, Ilokano, Tagalog" required>
+    </div>
+
+    <div class="form-group">
+      <label>Complete Address:</label>
+      <input type="text" name="address" placeholder="House No., Street/Purok, Barangay, Municipality" required>
+    </div>
+
+    <div class="section-header">2. Parent & Guardian Information</div>
+
+    <div class="form-group">
+      <label>Father's Full Name:</label>
+      <input type="text" name="fatherName" placeholder="Last Name, First Name, M.I.">
+    </div>
+
+    <div class="form-group">
+      <label>Mother's Maiden Name:</label>
+      <input type="text" name="motherName" placeholder="Mother's Full Maiden Name" required>
+    </div>
+
+    <div class="form-group">
+      <label>Parent / Guardian Name:</label>
+      <input type="text" name="guardianName" placeholder="Full Name of Primary Contact" required>
+    </div>
+
+    <div class="form-group">
+      <label>Parent/Guardian Occupation:</label>
+      <input type="text" name="occupation" placeholder="e.g. Farmer, Employee, Self-Employed">
+    </div>
+
+    <div class="form-group">
+      <label>Emergency Contact Number:</label>
+      <input type="tel" name="contactNumber" placeholder="09XXXXXXXXX" pattern="09[0-9]{9}" maxlength="11" required>
+    </div>
+
+    <div class="form-group">
+      <label>Is your family a 4Ps Household Beneficiary?</label>
+      <select name="fourPs" required>
+        <option value="">Select Answer</option>
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+    </div>
+
+    <div class="section-header">3. Academic History & Track Selection</div>
+
+    <div class="form-group">
+      <label>Student Status / Type:</label>
+      <select name="studentType" required>
+        <option value="">Select Student Status</option>
+        <option>Promoted Grade 9 Student (Regular)</option>
+        <option>Transferee</option>
+        <option>Returning / Balik-Aral</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Last School Attended:</label>
+      <input type="text" name="lastSchool" placeholder="Name of Previous School" required>
+    </div>
+
+    <div class="form-group">
+      <label>Grade 9 General Average:</label>
+      <input type="number" name="average" step="0.1" min="75" max="100" placeholder="e.g. 90" required>
+    </div>
+
+    <div class="form-group">
+      <label>Preferred Senior High Track/Strand (1st Choice):</label>
+      <select name="firstChoice" required>
+        <option value="">Select First Choice</option>
+        <option>TVL - Technical-Vocational Livelihood</option>
+        <option>HUMSS - Humanities & Social Sciences</option>
+        <option>STEM - Science & Technology</option>
+        <option>ABM - Accountancy & Business</option>
+        <option>GAS - General Academic Strand</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Preferred Senior High Track/Strand (2nd Choice):</label>
+      <select name="secondChoice" required>
+        <option value="">Select Second Choice</option>
+        <option>GAS - General Academic Strand</option>
+        <option>TVL - Technical-Vocational Livelihood</option>
+        <option>HUMSS - Humanities & Social Sciences</option>
+        <option>STEM - Science & Technology</option>
+        <option>ABM - Accountancy & Business</option>
+      </select>
+    </div>
+
+    <div class="section-header">4. Document Checklist</div>
+
+    <div class="form-group">
+      <label>Upload and check submitted documents:</label>
+
+      <div class="checkbox-group">
+
+        <div class="document-upload-item">
+          <label class="checkbox-item">
+            <input type="checkbox" required>
+            Form 138 (Grade 9 Report Card)
+          </label>
+          <input type="file" name="form138" accept=".pdf,image/*" required>
         </div>
 
-        <!-- HAMBURGER MENU -->
-        <div class="menu-wrapper">
-
-            <button class="menu-toggle-btn"
-                    id="menuBtn"
-                    onclick="toggleMenu()"
-                    aria-label="Open menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <div class="dropdown-menu" id="dropdownMenu">
-
-                <!-- ACCOUNT PROFILE / PORTAL SIGN IN -->
-                <div class="profile-header"
-                     role="button"
-                     tabindex="0"
-                     onclick="navigateTo('login-view')"
-                     onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('login-view');}">
-
-                    <div class="profile-avatar">
-                        <i class="fa-solid fa-user-plus"
-                           id="accountAvatarIcon"></i>
-                    </div>
-
-                    <div class="profile-info">
-                        <span class="profile-name"
-                              id="accountMenuName">
-                            Log in!
-                        </span>
-
-                        <span class="profile-role"
-                              id="accountMenuRole">
-                            Not signed in
-                        </span>
-                    </div>
-
-                </div>
-
-                <button class="dropdown-item"
-                        id="logoutMenuItem"
-                        onclick="handleLogout()"
-                        style="display:none">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Log Out
-                </button>
-
-                <div class="dropdown-category">
-                    Navigation
-                </div>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('home-view')">
-                    <i class="fa-solid fa-house"></i>
-                    Home
-                </button>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('enroll-view')">
-                    <i class="fa-solid fa-file-pen"></i>
-                    Enrollment Form
-                </button>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('status-view')">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                    Application Status
-                </button>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('admin-view')">
-                    <i class="fa-solid fa-user-shield"></i>
-                    Admin Portal
-                </button>
-
-                <div class="dropdown-divider"></div>
-
-                <div class="dropdown-category">
-                    Information
-                </div>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('about-view')">
-                    <i class="fa-solid fa-school"></i>
-                    About AHS
-                </button>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('guidelines-view')">
-                    <i class="fa-solid fa-list-check"></i>
-                    Enrollment Guidelines
-                </button>
-
-                <button class="dropdown-item"
-                        onclick="navigateTo('contact-view')">
-                    <i class="fa-solid fa-headset"></i>
-                    Contact / Help Desk
-                </button>
-
-            </div>
+        <div class="document-upload-item">
+          <label class="checkbox-item">
+            <input type="checkbox" required>
+            PSA Birth Certificate (Photocopy)
+          </label>
+          <input type="file" name="psa" accept=".pdf,image/*" required>
         </div>
 
-    </nav>
-
-    <main class="portrait-body">
-
-        <!-- PORTAL SIGN IN PAGE -->
-        <section id="login-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem;text-align:center;color:#1e3a8a">
-                Portal Sign In
-            </h2>
-
-            <p class="subtitle" style="text-align:center">
-                Sign in using your student information.
-            </p>
-
-            <hr>
-
-            <form class="form-portrait"
-                  onsubmit="handleLoginSubmit(event)">
-
-                <div class="form-group">
-                    <label for="loginStudentName">
-                        Student Full Name:
-                    </label>
-
-                    <input type="text"
-                           id="loginStudentName"
-                           placeholder="Enter your full name"
-                           autocomplete="name"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label for="loginLrn">
-                        LRN / Student ID:
-                    </label>
-
-                    <input type="text"
-                           id="loginLrn"
-                           placeholder="Enter your 12-digit LRN"
-                           inputmode="numeric"
-                           pattern="[0-9]{12}"
-                           maxlength="12"
-                           required>
-                </div>
-
-                <button type="submit"
-                        class="btn btn-primary"
-                        style="margin-top:10px">
-
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    Log In
-
-                </button>
-
-            </form>
-
-            <p style="font-size:.75rem;color:#64748b;line-height:1.5;margin-top:12px">
-                You can also continue without signing in and register as a guest.
-            </p>
-
-            <button class="btn btn-primary"
-                    style="margin-top:10px"
-                    onclick="navigateTo('home-view')">
-
-                Continue as Guest
-
-            </button>
-
-        </section>
-
-        <!-- HOME PAGE -->
-        <section id="home-view"
-                 class="view-section active-section card">
-
-            <h2 style="font-size:1.15rem">
-                Welcome to AHS
-            </h2>
-
-            <p class="subtitle">
-                Grade 10 Online Enrollment Portal
-            </p>
-
-            <hr>
-
-            <p style="font-size:0.85rem;line-height:1.5;color:#475569">
-                Welcome! Select Start Registration to fill out the enrollment form. After submitting, you can check your application status.
-            </p>
-
-            <div class="tile-grid">
-
-                <div class="tile-item"
-                     onclick="navigateTo('enroll-view')">
-
-                    <i class="fa-solid fa-file-pen"></i>
-
-                    <div>
-                        <h3>Start Registration</h3>
-
-                        <span style="font-size:0.72rem;color:#64748b">
-                            Registration Form
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- VISIBLE PORTAL SIGN IN BUTTON -->
-            <button class="signin-entry"
-                    type="button"
-                    onclick="navigateTo('login-view')">
-
-                <i class="fa-solid fa-right-to-bracket"></i>
-                Portal Sign In
-
-            </button>
-
-        </section>
-
-        <!-- ENROLLMENT FORM -->
-        <section id="enroll-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem">
-                Grade 10 Registration
-            </h2>
-
-            <p class="subtitle">
-                Please complete all required information below.
-            </p>
-
-            <form class="form-portrait"
-                  id="enrollmentForm"
-                  onsubmit="handleEnrollmentSubmit(event)">
-
-                <!-- PERSONAL DETAILS -->
-                <div class="section-header">
-                    1. Personal Details
-                </div>
-
-                <div class="form-group">
-                    <label>Learner Reference Number (LRN):</label>
-
-                    <input type="text"
-                           name="lrn"
-                           placeholder="12-digit LRN"
-                           pattern="[0-9]{12}"
-                           maxlength="12"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Full Name:</label>
-
-                    <input type="text"
-                           name="fullName"
-                           placeholder="Last Name, First Name, Middle Name"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Gender:</label>
-
-                    <select name="gender" required>
-                        <option value="">Select Gender</option>
-                        <option>Female</option>
-                        <option>Male</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Date of Birth:</label>
-                    <input type="date" name="birthDate" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Nationality:</label>
-
-                    <input type="text"
-                           name="nationality"
-                           value="Filipino"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Mother Tongue / Dialect:</label>
-
-                    <input type="text"
-                           name="motherTongue"
-                           placeholder="e.g. Ibaloi, Ifugao, Ilokano, Tagalog"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Complete Address:</label>
-
-                    <input type="text"
-                           name="address"
-                           placeholder="House No., Street/Purok, Barangay, Municipality"
-                           required>
-                </div>
-
-                <!-- PARENT AND GUARDIAN INFORMATION -->
-                <div class="section-header">
-                    2. Parent & Guardian Information
-                </div>
-
-                <div class="form-group">
-                    <label>Father's Full Name:</label>
-
-                    <input type="text"
-                           name="fatherName"
-                           placeholder="Last Name, First Name, M.I.">
-                </div>
-
-                <div class="form-group">
-                    <label>Mother's Maiden Name:</label>
-
-                    <input type="text"
-                           name="motherName"
-                           placeholder="Mother's Full Maiden Name"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Parent / Guardian Name:</label>
-
-                    <input type="text"
-                           name="guardianName"
-                           placeholder="Full Name of Primary Contact"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Parent/Guardian Occupation:</label>
-
-                    <input type="text"
-                           name="occupation"
-                           placeholder="e.g. Farmer, Employee, Self-Employed">
-                </div>
-
-                <div class="form-group">
-                    <label>Emergency Contact Number:</label>
-
-                    <input type="tel"
-                           name="contactNumber"
-                           placeholder="09XXXXXXXXX"
-                           pattern="09[0-9]{9}"
-                           maxlength="11"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Is your family a 4Ps Household Beneficiary?</label>
-
-                    <select name="fourPs" required>
-                        <option value="">Select Answer</option>
-                        <option>No</option>
-                        <option>Yes</option>
-                    </select>
-                </div>
-
-                <!-- ACADEMIC HISTORY -->
-                <div class="section-header">
-                    3. Academic History & Track Selection
-                </div>
-
-                <div class="form-group">
-                    <label>Student Status / Type:</label>
-
-                    <select name="studentType" required>
-                        <option value="">Select Student Status</option>
-                        <option>Promoted Grade 9 Student (Regular)</option>
-                        <option>Transferee</option>
-                        <option>Returning / Balik-Aral</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Last School Attended:</label>
-
-                    <input type="text"
-                           name="lastSchool"
-                           placeholder="Name of Previous School"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Grade 9 General Average:</label>
-
-                    <input type="number"
-                           name="average"
-                           step="0.1"
-                           min="75"
-                           max="100"
-                           placeholder="e.g. 90"
-                           required>
-                </div>
-
-                <div class="form-group">
-                    <label>Preferred Senior High Track/Strand (1st Choice):</label>
-
-                    <select name="firstChoice" required>
-                        <option value="">Select First Choice</option>
-                        <option>TVL - Technical-Vocational Livelihood</option>
-                        <option>HUMSS - Humanities & Social Sciences</option>
-                        <option>STEM - Science & Technology</option>
-                        <option>ABM - Accountancy & Business</option>
-                        <option>GAS - General Academic Strand</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Preferred Senior High Track/Strand (2nd Choice):</label>
-
-                    <select name="secondChoice" required>
-                        <option value="">Select Second Choice</option>
-                        <option>GAS - General Academic Strand</option>
-                        <option>TVL - Technical-Vocational Livelihood</option>
-                        <option>HUMSS - Humanities & Social Sciences</option>
-                        <option>STEM - Science & Technology</option>
-                        <option>ABM - Accountancy & Business</option>
-                    </select>
-                </div>
-
-                <!-- DOCUMENT CHECKLIST -->
-                <div class="section-header">
-                    4. Document Checklist
-                </div>
-
-                <div class="form-group">
-                    <label>Upload and check submitted documents:</label>
-
-                    <div class="checkbox-group">
-
-                        <div class="document-upload-item">
-
-                            <label class="checkbox-item">
-                                <input type="checkbox" required>
-                                Form 138 (Grade 9 Report Card)
-                            </label>
-
-                            <input type="file"
-                                   name="form138"
-                                   accept=".pdf,image/*"
-                                   required>
-                        </div>
-
-                        <div class="document-upload-item">
-
-                            <label class="checkbox-item">
-                                <input type="checkbox" required>
-                                PSA Birth Certificate (Photocopy)
-                            </label>
-
-                            <input type="file"
-                                   name="psa"
-                                   accept=".pdf,image/*"
-                                   required>
-                        </div>
-
-                        <div class="document-upload-item">
-
-                            <label class="checkbox-item">
-                                <input type="checkbox">
-                                Certificate of Good Moral Character
-                            </label>
-
-                            <input type="file"
-                                   name="goodMoral"
-                                   accept=".pdf,image/*">
-                        </div>
-
-                    </div>
-                </div>
-
-                <button type="submit"
-                        class="btn btn-success">
-
-                    Submit Enrollment Application
-
-                </button>
-
-            </form>
-
-        </section>
-
-        <!-- APPLICATION STATUS PAGE -->
-        <section id="status-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem">
-                Application Status
-            </h2>
-
-            <p class="subtitle">
-                Check the latest result of your Grade 10 registration.
-            </p>
-
-            <hr>
-
-            <div id="statusDetails"
-                 class="status-panel"
-                 aria-live="polite">
-
-                <div class="status-heading">
-                    No application found
-                </div>
-
-                <p class="status-message">
-                    Submit your registration form first.
-                    Your application status will appear here.
-                </p>
-
-            </div>
-
-            <button class="btn btn-primary"
-                    style="margin-top:14px"
-                    onclick="navigateTo('home-view')">
-
-                Back to Home
-
-            </button>
-
-        </section>
-
-        <!-- ADMIN PORTAL -->
-        <section id="admin-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem">
-                Admin Dashboard
-            </h2>
-
-            <p class="subtitle">
-                Registered Student Masterlist
-            </p>
-
-            <p style="font-size:0.8rem;color:#64748b;line-height:1.5">
-                Review submitted applications and update each student's status.
-            </p>
-
-            <table class="data-table">
-
-                <thead>
-                    <tr>
-                        <th>LRN</th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Update</th>
-                    </tr>
-                </thead>
-
-                <tbody id="adminRecordsBody">
-
-                    <tr>
-                        <td colspan="4" class="admin-empty">
-                            No registrations submitted yet.
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <!-- ABOUT SCHOOL -->
-        <section id="about-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem">
-                About Ambaguio High School
-            </h2>
-
-            <p class="subtitle">
-                Ambaguio, Nueva Vizcaya
-            </p>
-
-            <hr>
-
-            <p style="font-size:0.85rem;line-height:1.5;color:#334155">
-                <strong>Ambaguio High School</strong> is committed
-                to providing accessible, high-quality secondary
-                education to students in Ambaguio, Nueva Vizcaya,
-                empowering them with practical academic and
-                technical skills.
-            </p>
-
-        </section>
-
-        <!-- ENROLLMENT GUIDELINES -->
-        <section id="guidelines-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem">
-                Enrollment Guidelines
-            </h2>
-
-            <p class="subtitle">
-                Grade 10 Requirements & Policies
-            </p>
-
-            <hr>
-
-            <ul style="font-size:0.85rem;
-                       padding-left:18px;
-                       line-height:1.8;
-                       color:#334155">
-
-                <li>Grade 9 Report Card (Form 138)</li>
-                <li>PSA Birth Certificate (Photocopy)</li>
-                <li>Learner Reference Number (LRN) Verification</li>
-                <li>Certificate of Good Moral Character</li>
-
-            </ul>
-
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact-view"
-                 class="view-section card">
-
-            <h2 style="font-size:1.15rem">
-                Contact
-            </h2>
-
-            <p class="subtitle">
-                Help Desk Information
-            </p>
-
-            <hr>
-
-            <div class="contact-card">
-
-                <p style="font-size:0.85rem;line-height:1.8;color:#334155">
-
-                    <strong>Email:</strong>
-                    AmbaguioHighSchool.edu.ph
-
-                    <br>
-
-                    <strong>Contact:</strong>
-                    09876543212
-
-                    <br>
-
-                    <strong>Location:</strong>
-                    Ambaguio, Nueva Vizcaya
-
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
-
+        <div class="document-upload-item">
+          <label class="checkbox-item">
+            <input type="checkbox">
+            Certificate of Good Moral Character
+          </label>
+          <input type="file" name="goodMoral" accept=".pdf,image/*">
+        </div>
+
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+      Submit Enrollment Application
+    </button>
+
+  </form>
+</section>
+
+<!-- APPLICATION STATUS -->
+<section id="status-view" class="view-section card">
+  <h2 style="font-size:1.15rem">Application Status</h2>
+  <p class="subtitle">Check the latest result of your Grade 10 registration.</p>
+  <hr>
+
+  <div id="statusDetails" class="status-panel" aria-live="polite">
+    <div class="status-heading">No application found</div>
+    <p class="status-message">Submit your registration form first. Your application status will appear here.</p>
+  </div>
+
+  <button class="btn btn-primary" style="margin-top:14px" onclick="navigateTo('home-view')">
+    Back to Home
+  </button>
+</section>
+
+<!-- ADMIN PORTAL -->
+<section id="admin-view" class="view-section card">
+  <h2 style="font-size:1.15rem">Admin Dashboard</h2>
+  <p class="subtitle">Registered Student Masterlist</p>
+
+  <p style="font-size:.8rem;color:#64748b;line-height:1.5">
+    Review submitted applications and update each student's status.
+  </p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>LRN</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+    <tbody id="adminRecordsBody">
+      <tr>
+        <td colspan="4" class="admin-empty">No registrations submitted yet.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ABOUT SCHOOL -->
+<section id="about-view" class="view-section card">
+  <h2 style="font-size:1.15rem">About Ambaguio High School</h2>
+  <p class="subtitle">Ambaguio, Nueva Vizcaya</p>
+  <hr>
+
+  <p style="font-size:.85rem;line-height:1.5;color:#334155">
+    <strong>Ambaguio High School</strong> is committed to providing accessible, high-quality secondary education to students in Ambaguio, Nueva Vizcaya, empowering them with practical academic and technical skills.
+  </p>
+</section>
+
+<!-- ENROLLMENT GUIDELINES -->
+<section id="guidelines-view" class="view-section card">
+  <h2 style="font-size:1.15rem">Enrollment Guidelines</h2>
+  <p class="subtitle">Grade 10 Requirements & Policies</p>
+  <hr>
+
+  <ul style="font-size:.85rem;padding-left:18px;line-height:1.8;color:#334155">
+    <li>Grade 9 Report Card (Form 138)</li>
+    <li>PSA Birth Certificate (Photocopy)</li>
+    <li>Learner Reference Number (LRN) Verification</li>
+    <li>Certificate of Good Moral Character</li>
+  </ul>
+</section>
+
+<!-- CONTACT / HELP DESK -->
+<section id="contact-view" class="view-section card">
+  <h2 style="font-size:1.15rem">Contact</h2>
+  <p class="subtitle">Help Desk Information</p>
+  <hr>
+
+  <div class="contact-card">
+    <p style="font-size:.85rem;line-height:1.8;color:#334155">
+      <strong>Email:</strong> AmbaguioHighSchool.edu.ph<br>
+      <strong>Contact:</strong> 09876543212<br>
+      <strong>Location:</strong> Ambaguio, Nueva Vizcaya
+    </p>
+  </div>
+</section>
+
+</main>
 </div>
 
 <script>
-
-/* STORAGE KEYS */
 const APPLICATIONS_KEY = "ahsGrade10Applications";
 const CURRENT_APPLICATION_KEY = "ahsCurrentApplicationId";
 const STUDENT_SESSION_KEY = "ahsStudentDemoSession";
 
-/* GET APPLICATIONS */
 function getApplications() {
-
     try {
-
-        const records = JSON.parse(
-            localStorage.getItem(APPLICATIONS_KEY) || "[]"
-        );
-
+        const records = JSON.parse(localStorage.getItem(APPLICATIONS_KEY) || "[]");
         return Array.isArray(records) ? records : [];
-
     } catch (error) {
-
         console.error("Error reading applications:", error);
-
         return [];
-
     }
-
 }
 
-/* SAVE APPLICATIONS */
 function saveApplications(records) {
-
-    localStorage.setItem(
-        APPLICATIONS_KEY,
-        JSON.stringify(records)
-    );
-
+    localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(records));
 }
 
-/* PREVENT HTML INJECTION */
 function escapeHTML(value) {
-
     return String(value ?? "").replace(/[&<>"']/g, character => ({
-
         "&": "&amp;",
         "<": "&lt;",
         ">": "&gt;",
         '"': "&quot;",
         "'": "&#039;"
-
     })[character]);
-
 }
 
-/* UPDATE ACCOUNT NAME IN MENU */
-function updateAccountMenu() {
-
-    const nameElement =
-        document.getElementById("accountMenuName");
-
-    const roleElement =
-        document.getElementById("accountMenuRole");
-
-    const logoutButton =
-        document.getElementById("logoutMenuItem");
-
-    const avatarIcon =
-        document.getElementById("accountAvatarIcon");
-
-    let student = null;
-
+function getCurrentStudent() {
     try {
+        const student = JSON.parse(sessionStorage.getItem(STUDENT_SESSION_KEY) || "null");
 
-        student = JSON.parse(
-            localStorage.getItem(STUDENT_SESSION_KEY) || "null"
-        );
-
+        if (student && student.name && /^[0-9]{12}$/.test(student.lrn)) {
+            return student;
+        }
     } catch (error) {
-
-        student = null;
-
+        console.error("Could not read student session:", error);
     }
 
-    if (student && student.name && student.lrn) {
-
-        nameElement.textContent = student.name;
-
-        roleElement.textContent = "Student Account";
-
-        logoutButton.style.display = "flex";
-
-        avatarIcon.className = "fa-solid fa-user";
-
-    } else {
-
-        nameElement.textContent = "Log in!";
-
-        roleElement.textContent = "Not signed in";
-
-        logoutButton.style.display = "none";
-
-        avatarIcon.className = "fa-solid fa-user-plus";
-
-    }
-
+    return null;
 }
 
-/* PORTAL SIGN IN */
-function handleLoginSubmit(event) {
+function updateAccountMenu() {
+    const student = getCurrentStudent();
 
+    document.getElementById("accountMenuName").textContent =
+        student ? student.name : "Not signed in";
+
+    document.getElementById("accountMenuRole").textContent =
+        student ? "Student Account" : "Portal Sign In";
+}
+
+/* PORTAL SIGN IN MUST HAPPEN BEFORE THE HOME PAGE */
+function handleLoginSubmit(event) {
     event.preventDefault();
 
-    const name = document
-        .getElementById("loginStudentName")
-        .value.trim();
-
-    const lrn = document
-        .getElementById("loginLrn")
-        .value.trim();
+    const name = document.getElementById("loginStudentName").value.trim();
+    const lrn = document.getElementById("loginLrn").value.trim();
 
     if (!name || !/^[0-9]{12}$/.test(lrn)) {
-
         return;
-
     }
 
     try {
-
-        localStorage.setItem(
+        sessionStorage.setItem(
             STUDENT_SESSION_KEY,
-            JSON.stringify({
-                name: name,
-                lrn: lrn
-            })
+            JSON.stringify({ name, lrn })
         );
-
     } catch (error) {
-
-        alert("Unable to save the sign-in session. Please try again.");
-
+        alert("Unable to save your sign-in session. Please try again.");
         return;
-
     }
 
     updateAccountMenu();
 
-    navigateTo("home-view");
+    document.getElementById("menuWrapper").style.display = "block";
 
+    // After entering the student name and LRN, open Home.
+    navigateTo("home-view");
 }
 
-/* LOG OUT */
 function handleLogout() {
-
-    localStorage.removeItem(STUDENT_SESSION_KEY);
+    sessionStorage.removeItem(STUDENT_SESSION_KEY);
 
     updateAccountMenu();
 
-    navigateTo("home-view");
+    document.getElementById("menuWrapper").style.display = "none";
 
+    document.getElementById("dropdownMenu").classList.remove("show");
+
+    navigateTo("login-view");
 }
 
-/* OPEN AND CLOSE MENU */
 function toggleMenu() {
-
-    document
-        .getElementById("dropdownMenu")
-        .classList.toggle("show");
-
+    document.getElementById("dropdownMenu").classList.toggle("show");
 }
 
-/* NAVIGATION */
+/* REQUIRE PORTAL SIGN IN BEFORE OPENING OTHER PAGES */
 function navigateTo(viewId) {
+    const student = getCurrentStudent();
+
+    if (viewId !== "login-view" && !student) {
+        viewId = "login-view";
+    }
 
     document.querySelectorAll(".view-section").forEach(section => {
-
         section.classList.remove("active-section");
-
     });
 
-    const selectedPage = document.getElementById(viewId);
+    const page = document.getElementById(viewId);
 
-    if (selectedPage) {
-
-        selectedPage.classList.add("active-section");
-
+    if (page) {
+        page.classList.add("active-section");
     }
 
-    document
-        .getElementById("dropdownMenu")
-        .classList.remove("show");
+    document.getElementById("dropdownMenu").classList.remove("show");
 
     if (viewId === "status-view") {
-
         renderApplicationStatus();
-
     }
 
     if (viewId === "admin-view") {
-
         renderAdminApplications();
+    }
 
+    // Automatically fill in the name and LRN entered during sign in.
+    if (viewId === "enroll-view" && student) {
+        document.querySelector('#enrollmentForm [name="lrn"]').value = student.lrn;
+        document.querySelector('#enrollmentForm [name="fullName"]').value = student.name;
     }
 
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
-
 }
 
 /* SUBMIT ENROLLMENT */
 function handleEnrollmentSubmit(event) {
-
     event.preventDefault();
 
-    const form = event.target;
+    if (!getCurrentStudent()) {
+        navigateTo("login-view");
+        return;
+    }
 
+    const form = event.target;
     const formData = new FormData(form);
 
-    const details = {};
-
     const fieldNames = {
-
         lrn: "LRN",
         fullName: "Full Name",
         gender: "Gender",
@@ -1467,170 +649,97 @@ function handleEnrollmentSubmit(event) {
         average: "Grade 9 General Average",
         firstChoice: "First Choice",
         secondChoice: "Second Choice"
-
     };
+
+    const details = {};
 
     Object.keys(fieldNames).forEach(key => {
-
         details[fieldNames[key]] = formData.get(key) || "";
-
     });
 
-    /* DOCUMENT FILENAMES */
     const uploadedDocuments = {
-
         form138: form.elements.form138.files[0]?.name || "",
-
         psa: form.elements.psa.files[0]?.name || "",
-
         goodMoral: form.elements.goodMoral.files[0]?.name || ""
-
     };
 
-    /* CREATE APPLICATION */
     const application = {
-
         id: "AHS-" + Date.now(),
-
         submittedAt: new Date().toISOString(),
-
         status: "Pending",
-
-        details: details,
-
-        uploadedDocuments: uploadedDocuments
-
+        details,
+        uploadedDocuments
     };
 
     try {
-
         const records = getApplications();
 
         records.push(application);
 
         saveApplications(records);
 
-        localStorage.setItem(
-            CURRENT_APPLICATION_KEY,
-            application.id
-        );
+        localStorage.setItem(CURRENT_APPLICATION_KEY, application.id);
 
     } catch (error) {
-
         document.getElementById("statusDetails").innerHTML = `
-
-            <div class="status-heading">
-                Unable to save application
-            </div>
-
+            <div class="status-heading">Unable to save application</div>
             <p class="status-message">
-                Your browser could not save the registration.
-                Please try again.
-            </p>
-
-        `;
+                Your browser could not save the registration. Please try again.
+            </p>`;
 
         navigateTo("status-view");
-
         return;
-
     }
 
     form.reset();
 
-    /* GO DIRECTLY TO APPLICATION STATUS */
+    // Automatically move to Application Status after submission.
     navigateTo("status-view");
-
 }
 
 /* APPLICATION STATUS */
 function renderApplicationStatus() {
+    const statusBox = document.getElementById("statusDetails");
 
-    const statusBox =
-        document.getElementById("statusDetails");
-
-    const currentId = localStorage.getItem(
-        CURRENT_APPLICATION_KEY
-    );
+    const currentId = localStorage.getItem(CURRENT_APPLICATION_KEY);
 
     const application = getApplications().find(record => {
-
         return record.id === currentId;
-
     });
 
     if (!application) {
-
         statusBox.innerHTML = `
-
-            <div class="status-heading">
-                No application found
-            </div>
-
+            <div class="status-heading">No application found</div>
             <p class="status-message">
-                Submit your registration form first.
-                Your application status will appear here.
-            </p>
-
-        `;
-
+                Submit your registration form first. Your application status will appear here.
+            </p>`;
         return;
-
     }
 
     const status = application.status || "Pending";
 
-    let message = `
-        Your registration has been received.
-        The school is currently reviewing your information
-        and submitted documents.
-    `;
+    let message = "Your registration has been received. The school is currently reviewing your information and submitted documents.";
 
     if (status === "Accepted") {
-
-        message = `
-            Congratulations! Your Grade 10 enrollment application
-            has been accepted. Please follow the instructions
-            provided by the school for the next enrollment steps.
-        `;
-
+        message = "Your Grade 10 enrollment application has been accepted. Please follow the instructions provided by the school for the next enrollment steps.";
     }
 
     if (status === "Rejected") {
-
-        message = `
-            Your application was not accepted.
-            Please contact Ambaguio High School to ask about
-            the result and the next steps.
-        `;
-
+        message = "Your application was not accepted. Please contact Ambaguio High School to ask about the result and the next steps.";
     }
 
-    const submittedDate = new Date(
-        application.submittedAt
-    ).toLocaleString();
-
     statusBox.innerHTML = `
+        <div class="status-heading">Registration Result</div>
 
-        <div class="status-heading">
-            Registration Result
-        </div>
-
-        <p style="font-size:0.85rem;color:#334155;margin:8px 0">
-
-            <strong>
-                ${escapeHTML(application.details["Full Name"])}
-            </strong>
-
+        <p style="font-size:.85rem;color:#334155;margin:8px 0">
+            <strong>${escapeHTML(application.details["Full Name"])}</strong>
         </p>
 
         <span class="badge ${status.toLowerCase()}">
             ${escapeHTML(status)}
         </span>
 
-        <p class="status-message">
-            ${escapeHTML(message)}
-        </p>
+        <p class="status-message">${escapeHTML(message)}</p>
 
         <p class="status-reference">
             Reference Number:
@@ -1639,152 +748,88 @@ function renderApplicationStatus() {
 
         <p class="status-reference">
             Date Submitted:
-            ${escapeHTML(submittedDate)}
-        </p>
-
-    `;
-
+            ${escapeHTML(new Date(application.submittedAt).toLocaleString())}
+        </p>`;
 }
 
 /* ADMIN APPLICATION LIST */
 function renderAdminApplications() {
-
-    const tableBody =
-        document.getElementById("adminRecordsBody");
+    const tableBody = document.getElementById("adminRecordsBody");
 
     const records = getApplications().sort((a, b) => {
-
-        return new Date(b.submittedAt) -
-               new Date(a.submittedAt);
-
+        return new Date(b.submittedAt) - new Date(a.submittedAt);
     });
 
-    if (records.length === 0) {
-
+    if (!records.length) {
         tableBody.innerHTML = `
-
             <tr>
-
                 <td colspan="4" class="admin-empty">
                     No registrations submitted yet.
                 </td>
-
-            </tr>
-
-        `;
-
+            </tr>`;
         return;
-
     }
 
     tableBody.innerHTML = records.map(application => {
-
         const status = application.status || "Pending";
-
-        const lrn =
-            application.details["LRN"] || "—";
-
-        const name =
-            application.details["Full Name"] || "Unnamed Student";
+        const lrn = application.details["LRN"] || "—";
+        const name = application.details["Full Name"] || "Unnamed Student";
 
         return `
-
             <tr>
-
+                <td>${escapeHTML(lrn)}</td>
+                <td>${escapeHTML(name)}</td>
                 <td>
-                    ${escapeHTML(lrn)}
-                </td>
-
-                <td>
-                    ${escapeHTML(name)}
-                </td>
-
-                <td>
-
                     <span class="badge ${status.toLowerCase()}">
                         ${escapeHTML(status)}
                     </span>
-
                 </td>
-
                 <td>
-
                     <div class="status-actions">
-
-                        <button
-                            class="btn-small btn-accept"
+                        <button class="btn-small btn-accept"
                             onclick="updateApplicationStatus('${escapeHTML(application.id)}','Accepted')">
-
                             Accept
-
                         </button>
 
-                        <button
-                            class="btn-small btn-reject"
+                        <button class="btn-small btn-reject"
                             onclick="updateApplicationStatus('${escapeHTML(application.id)}','Rejected')">
-
                             Reject
-
                         </button>
-
                     </div>
-
                 </td>
-
-            </tr>
-
-        `;
-
+            </tr>`;
     }).join("");
-
 }
 
 /* ADMIN ACCEPT OR REJECT */
 function updateApplicationStatus(applicationId, newStatus) {
-
-    if (
-        newStatus !== "Accepted" &&
-        newStatus !== "Rejected"
-    ) {
-
+    if (!["Accepted", "Rejected"].includes(newStatus)) {
         return;
-
     }
 
     const records = getApplications();
 
     const application = records.find(record => {
-
         return record.id === applicationId;
-
     });
 
     if (!application) {
-
         return;
-
     }
 
     application.status = newStatus;
-
     application.updatedAt = new Date().toISOString();
 
     saveApplications(records);
 
     renderAdminApplications();
-
     renderApplicationStatus();
-
 }
 
 /* CLOSE MENU WHEN CLICKING OUTSIDE */
 window.addEventListener("click", function(event) {
-
-    const menu =
-        document.getElementById("dropdownMenu");
-
-    const menuButton =
-        document.getElementById("menuBtn");
+    const menu = document.getElementById("dropdownMenu");
+    const menuButton = document.getElementById("menuBtn");
 
     if (
         menu &&
@@ -1792,22 +837,25 @@ window.addEventListener("click", function(event) {
         !menu.contains(event.target) &&
         !menuButton.contains(event.target)
     ) {
-
         menu.classList.remove("show");
-
     }
-
 });
 
 /* INITIALIZE SYSTEM */
 document.addEventListener("DOMContentLoaded", function() {
+    const student = getCurrentStudent();
 
     updateAccountMenu();
-
     renderApplicationStatus();
 
+    if (student) {
+        document.getElementById("menuWrapper").style.display = "block";
+        navigateTo("home-view");
+    } else {
+        document.getElementById("menuWrapper").style.display = "none";
+        navigateTo("login-view");
+    }
 });
-
 </script>
 
 </body>
