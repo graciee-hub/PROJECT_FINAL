@@ -4,870 +4,1123 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ambaguio HS - Grade 10 Web-Based Enrollment System</title>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* MAIN CONTAINER */
+.portrait-app {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+/* NAVIGATION BAR */
+.navbar {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.brand {
+    flex: 1;
+    text-align: center;
+}
+
+.brand h2 {
+    font-size: 1.05rem;
+    line-height: 1.2;
+}
+
+.brand span {
+    font-size: 0.72rem;
+    color: #93c5fd;
+}
+
+/* SCHOOL LOGOS */
+.nav-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.school-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ffffff;
+    padding: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* HAMBURGER MENU */
+.menu-wrapper {
+    position: relative;
+    display: block;
+}
+
+.menu-toggle-btn {
+    background-color: #e0f2fe;
+    border: 1px solid #bae6fd;
+    color: #0369a1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.menu-toggle-btn:hover {
+    background-color: #bae6fd;
+    color: #0c4a6e;
+}
+
+/* DROPDOWN MENU */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 48px;
+    background-color: #ffffff;
+    width: 270px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 1000;
+    border: 1px solid #e2e8f0;
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
     }
- 
-    body {
-      background-color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding: 0;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
- 
-    /* PORTRAIT CONTAINER */
-    .portrait-app {
-      width: 100%;
-      max-width: 420px;
-      min-height: 100vh;
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-    }
- 
-    /* TOP NAVIGATION BAR */
+}
+
+/* GUEST HEADER */
+.profile-header {
+    background: #f8fafc;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.profile-avatar {
+    width: 42px;
+    height: 42px;
+    background-color: #1e3a8a;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.profile-role {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+/* DROPDOWN ITEMS */
+.dropdown-category {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+    padding: 10px 14px 4px;
+    letter-spacing: 0.5px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    color: #334155;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    transition: background 0.15s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #1e3a8a;
+}
+
+.dropdown-item i {
+    width: 18px;
+    text-align: center;
+    color: #64748b;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 2px 0;
+}
+
+/* BODY CONTENT */
+.portrait-body {
+    flex: 1;
+    padding: 16px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
+    border: 1px solid #f1f5f9;
+}
+
+.subtitle {
+    color: #64748b;
+    font-size: 0.82rem;
+    margin-bottom: 12px;
+}
+
+.section-header {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin: 14px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin-bottom: 14px;
+}
+
+/* PAGE NAVIGATION */
+.view-section {
+    display: none;
+}
+
+.view-section.active-section {
+    display: block;
+}
+
+/* FORM STYLES */
+.form-portrait {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #334155;
+}
+
+.form-group input,
+.form-group select {
+    padding: 9px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* DOCUMENT UPLOAD */
+.document-upload-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.document-upload-item input[type="file"] {
+    font-size: 0.78rem;
+    padding: 4px;
+    background: #fff;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* HOME PAGE TILE */
+.tile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.tile-item {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    padding: 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tile-item:hover {
+    border-color: #60a5fa;
+    background: #eff6ff;
+}
+
+.tile-item i {
+    font-size: 1.4rem;
+    color: #2563eb;
+}
+
+.tile-item h3 {
+    font-size: 0.9rem;
+    color: #0f172a;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 11px 16px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #e0f2fe;
+    border-color: #bae6fd;
+    color: #0369a1;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #bae6fd;
+    color: #0c4a6e;
+}
+
+.btn-success {
+    background-color: #dcfce7;
+    border-color: #bbf7d0;
+    color: #15803d;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.btn-success:hover {
+    background-color: #bbf7d0;
+    color: #166534;
+}
+
+/* ADMIN TABLE */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #e2e8f0;
+    padding: 8px 6px;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f8fafc;
+}
+
+.badge {
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+}
+
+.pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.approved {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+/* CONTACT */
+.contact-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 360px) {
     .navbar {
-      background-color: #1e3a8a;
-      color: #ffffff;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      gap: 10px;
+        padding: 10px;
+        gap: 5px;
     }
- 
-    .brand {
-      flex: 1;
-      text-align: center;
-    }
- 
-    .brand h2 {
-      font-size: 1.05rem;
-      line-height: 1.2;
-    }
- 
-    .brand span {
-      font-size: 0.72rem;
-      color: #93c5fd;
-    }
- 
-    .nav-logo-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
- 
+
     .school-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      object-fit: cover;
-      background-color: #ffffff;
-      padding: 2px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        width: 34px;
+        height: 34px;
     }
- 
-    /* MENU TOGGLE BUTTON */
-    .menu-wrapper {
-      position: relative;
-      display: none; /* Hidden by default until login */
+
+    .brand h2 {
+        font-size: 0.9rem;
     }
- 
-    .menu-toggle-btn {
-      background-color: #e0f2fe;
-      border: 1px solid #bae6fd;
-      color: #0369a1;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
+
+    .brand span {
+        font-size: 0.65rem;
     }
- 
-    .menu-toggle-btn:hover {
-      background-color: #bae6fd;
-      color: #0c4a6e;
-    }
- 
-    /* DROPDOWN MENU - POSITIONED RIGHT */
+
     .dropdown-menu {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 48px;
-      background-color: #ffffff;
-      width: 270px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      border-radius: 12px;
-      overflow: hidden;
-      z-index: 1000;
-      border: 1px solid #e2e8f0;
+        width: 250px;
     }
- 
-    .dropdown-menu.show {
-      display: block;
-      animation: popIn 0.2s ease-out;
-    }
- 
-    @keyframes popIn {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
- 
-    /* PROFILE HEADER IN DROPDOWN */
-    .profile-header {
-      background: #f8fafc;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      cursor: pointer;
-    }
- 
-    .profile-avatar {
-      width: 42px;
-      height: 42px;
-      background-color: #1e3a8a;
-      color: #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-    }
- 
-    .profile-info {
-      display: flex;
-      flex-direction: column;
-    }
- 
-    .profile-name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
- 
-    .profile-role {
-      font-size: 0.75rem;
-      color: #64748b;
-    }
- 
-    /* DROPDOWN ITEMS */
-    .dropdown-category {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #94a3b8;
-      padding: 10px 14px 4px 14px;
-      letter-spacing: 0.5px;
-    }
- 
-    .dropdown-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      color: #334155;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: left;
-      transition: background 0.15s ease;
-    }
- 
-    .dropdown-item:hover {
-      background-color: #f1f5f9;
-      color: #1e3a8a;
-    }
- 
-    .dropdown-item i {
-      width: 18px;
-      text-align: center;
-      color: #64748b;
-    }
- 
-    .dropdown-divider {
-      height: 1px;
-      background-color: #e2e8f0;
-      margin: 2px 0;
-    }
- 
-    /* PORTRAIT BODY CONTENT */
-    .portrait-body {
-      flex: 1;
-      padding: 16px;
-    }
- 
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 18px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-      margin-bottom: 16px;
-      border: 1px solid #f1f5f9;
-    }
- 
-    .subtitle {
-      color: #64748b;
-      font-size: 0.82rem;
-      margin-bottom: 12px;
-    }
- 
-    .section-header {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e3a8a;
-      margin: 14px 0 8px 0;
-      padding-bottom: 4px;
-      border-bottom: 1px solid #e2e8f0;
-    }
- 
-    hr {
-      border: 0;
-      height: 1px;
-      background: #e2e8f0;
-      margin-bottom: 14px;
-    }
- 
-    .view-section {
-      display: none;
-    }
- 
-    .view-section.active-section {
-      display: block;
-    }
- 
-    /* FORM STYLES */
-    .form-portrait {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
- 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
- 
-    .form-group label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #334155;
-    }
- 
-    .form-group input, .form-group select {
-      padding: 9px 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      font-size: 0.88rem;
-    }
- 
-    .document-upload-item {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 10px;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
- 
-    .document-upload-item input[type="file"] {
-      font-size: 0.78rem;
-      padding: 4px;
-      background: #fff;
-    }
- 
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 4px;
-    }
- 
-    .checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #334155;
-    }
- 
-    /* TILES FOR HOME */
-    .tile-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 14px;
-    }
- 
-    .tile-item {
-      background: #f8fafc;
-      border: 1.5px solid #e2e8f0;
-      padding: 14px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
- 
-    .tile-item:hover {
-      border-color: #60a5fa;
-      background: #eff6ff;
-    }
- 
-    .tile-item i {
-      font-size: 1.4rem;
-      color: #2563eb;
-    }
- 
-    .tile-item h3 {
-      font-size: 0.9rem;
-      color: #0f172a;
-    }
- 
-    /* LIGHT COLOR BUTTONS & TABLES */
-    .btn {
-      padding: 11px 16px;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
- 
-    .btn-primary {
-      background-color: #e0f2fe;
-      border-color: #bae6fd;
-      color: #0369a1;
-      width: 100%;
-    }
- 
-    .btn-primary:hover {
-      background-color: #bae6fd;
-      color: #0c4a6e;
-    }
- 
-    .btn-success {
-      background-color: #dcfce7;
-      border-color: #bbf7d0;
-      color: #15803d;
-      width: 100%;
-      margin-top: 6px;
-    }
- 
-    .btn-success:hover {
-      background-color: #bbf7d0;
-      color: #166534;
-    }
- 
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-      margin-top: 10px;
-    }
- 
-    .data-table th, .data-table td {
-      border: 1px solid #e2e8f0;
-      padding: 8px 6px;
-      text-align: left;
-    }
- 
-    .data-table th { background-color: #f8fafc; }
- 
-    .badge {
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-size: 0.7rem;
-    }
-    .pending { background-color: #fef3c7; color: #d97706; }
-    .approved { background-color: #d1fae5; color: #059669; }
- 
-    .contact-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
- 
-    /* PROFILE STYLES */
-    .profile-card-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding-bottom: 14px;
-      border-bottom: 1px solid #e2e8f0;
-      margin-bottom: 14px;
-    }
- 
-    .big-avatar {
-      width: 70px;
-      height: 70px;
-      background-color: #1e3a8a;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
- 
-    .profile-detail-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px dashed #e2e8f0;
-      font-size: 0.85rem;
-    }
- 
-    .profile-detail-label {
-      color: #64748b;
-      font-weight: 600;
-    }
- 
-    .profile-detail-value {
-      color: #0f172a;
-      font-weight: 500;
-      text-align: right;
-    }
+}
 </style>
 </head>
+
 <body>
- 
-  <div class="portrait-app">
- 
+
+<div class="portrait-app">
+
+    <!-- NAVIGATION BAR -->
     <nav class="navbar" id="appNavbar">
-<div class="nav-logo-container">
-<img src="AMBAGUIO.jpg" alt="Ambaguio High School Logo" class="school-logo" width="42" height="42">
-<img src="DEPED.jpg" alt="DEPED Logo" class="school-logo" width="42" height="42">
-</div>
- 
-      <div class="brand">
-<h2>Ambaguio High School</h2>
-<span>Grade 10 Enrollment System</span>
-</div>
- 
-      <div class="menu-wrapper" id="menuWrapper">
-<button class="menu-toggle-btn" id="menuBtn" onclick="toggleMenu()" title="Menu">
-<i class="fa-solid fa-bars"></i>
-</button>
- 
-        <div class="dropdown-menu" id="dropdownMenu">
-<div class="profile-header" onclick="navigateTo('profile-view')">
-<div class="profile-avatar">
-<i class="fa-solid fa-user"></i>
-</div>
-<div class="profile-info">
-<span class="profile-name" id="currentUserName">Student Name</span>
-<span class="profile-role">Student Account</span>
-</div>
-</div>
- 
-          <div class="dropdown-category">Account Settings</div>
-<button class="dropdown-item" onclick="navigateTo('profile-view')">
-<i class="fa-solid fa-address-card"></i> My Profile
-</button>
-<button class="dropdown-item" onclick="handleAccountSwitch()">
-<i class="fa-solid fa-users-gear"></i> Change Account
-</button>
-<button class="dropdown-item" onclick="handleLogout()">
-<i class="fa-solid fa-right-from-bracket"></i> Log Out
-</button>
- 
-          <div class="dropdown-divider"></div>
- 
-          <div class="dropdown-category">Navigation</div>
-<button class="dropdown-item" onclick="navigateTo('home-view')">
-<i class="fa-solid fa-house"></i> Home
-</button>
-<button class="dropdown-item" onclick="navigateTo('enroll-view')">
-<i class="fa-solid fa-file-pen"></i> Enrollment Form
-</button>
-<button class="dropdown-item" onclick="navigateTo('admin-view')">
-<i class="fa-solid fa-user-shield"></i> Admin Portal
-</button>
- 
-          <div class="dropdown-divider"></div>
- 
-          <div class="dropdown-category">Information</div>
-<button class="dropdown-item" onclick="navigateTo('about-view')">
-<i class="fa-solid fa-school"></i> About AHS
-</button>
-<button class="dropdown-item" onclick="navigateTo('guidelines-view')">
-<i class="fa-solid fa-list-check"></i> Enrollment Guidelines
-</button>
-<button class="dropdown-item" onclick="navigateTo('contact-view')">
-<i class="fa-solid fa-headset"></i> Contact / Help Desk
-</button>
- 
+
+        <div class="nav-logo-container">
+            <img src="AMBAGUIO.jpg"
+                 alt="Ambaguio High School Logo"
+                 class="school-logo">
+
+            <img src="DEPED.jpg"
+                 alt="DepEd Logo"
+                 class="school-logo">
         </div>
-</div>
- 
-    </nav>
- 
-    <div class="portrait-body">
- 
-      <!-- Login View Active by Default -->
-<section id="login-view" class="view-section active-section card">
-<h2 style="font-size: 1.15rem; text-align: center; color: #1e3a8a;">Portal Sign In</h2>
-<p class="subtitle" style="text-align: center;">Log in to access the Enrollment System.</p>
-<hr>
-<form class="form-portrait" onsubmit="handleLoginSubmit(event)">
-<div class="form-group">
-<label>Student Full Name:</label>
-<input type="text" id="loginUsername" placeholder="Enter Full Name" required>
-</div>
-<div class="form-group">
-<label>LRN / Student ID:</label>
-<input type="password" placeholder="Enter 12-digit LRN" required>
-</div>
-<button type="submit" class="btn btn-primary" style="margin-top: 10px;">Log In</button>
-</form>
-</section>
- 
-      <section id="home-view" class="view-section card">
-<h2 style="font-size: 1.15rem;">Welcome to AHS</h2>
-<p class="subtitle">Grade 10 Online Enrollment Portal</p>
-<hr>
-<p style="font-size: 0.85rem; line-height: 1.5; color: #475569;">
-          Use the menu button on the top right to access your profile, complete your enrollment, or review school policies.
-</p>
- 
-        <div class="tile-grid">
-<div class="tile-item" onclick="navigateTo('enroll-view')">
-<i class="fa-solid fa-file-pen"></i>
-<div>
-<h3>Start Registration</h3>
-<span style="font-size: 0.72rem; color: #64748b;">Fill Out Grade 10 Form</span>
-</div>
-</div>
-</div>
-</section>
- 
-      <section id="profile-view" class="view-section card">
-<div class="profile-card-header">
-<div class="big-avatar">
-<i class="fa-solid fa-user"></i>
-</div>
-<h2 style="font-size: 1.1rem;" id="profileDisplayName">Student Name</h2>
-<span style="font-size: 0.78rem; color: #64748b;"></span>
-<span class="badge pending" style="margin-top: 6px;">Pending</span>
-</div>
- 
-        <div class="section-header">Personal Information</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">LRN:</span>
-<span class="profile-detail-value">---</span>
-</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">Gender:</span>
-<span class="profile-detail-value">---</span>
-</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">Birth Date:</span>
-<span class="profile-detail-value">---</span>
-</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">Address:</span>
-<span class="profile-detail-value">---</span>
-</div>
- 
-        <div class="section-header" style="margin-top: 14px;">Guardian & Contact</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">Parent/Guardian:</span>
-<span class="profile-detail-value">---</span>
-</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">Contact Number:</span>
-<span class="profile-detail-value">---</span>
-</div>
- 
-        <div class="section-header" style="margin-top: 14px;">Academic Preference</div>
-<div class="profile-detail-row">
-<span class="profile-detail-label">Target Track:</span>
-<span class="profile-detail-value">---</span>
-</div>
- 
-        <button class="btn btn-primary" style="margin-top: 16px;" onclick="navigateTo('enroll-view')">
-<i class="fa-solid fa-pen-to-square"></i> Edit Profile Details
-</button>
-</section>
- 
-      <section id="enroll-view" class="view-section card">
-<h2 style="font-size: 1.15rem;">Grade 10 Registration</h2>
-<p class="subtitle">Please complete all required information below.</p>
-<form class="form-portrait" onsubmit="handleEnrollmentSubmit(event)">
-<div class="section-header">1. Personal Details</div>
-<div class="form-group">
-<label>Learner Reference Number (LRN):</label>
-<input type="text" placeholder="12-digit LRN" required pattern="[0-9]{12}">
-</div>
-<div class="form-group">
-<label>Full Name:</label>
-<input type="text" placeholder="Last Name, First Name, Middle Name" required>
-</div>
-<div class="form-group">
-<label>Gender:</label>
-<select><option>Female</option><option>Male</option></select>
-</div>
-<div class="form-group">
-<label>Date of Birth:</label>
-<input type="date" required>
-</div>
-<div class="form-group">
-<label>Nationality:</label>
-<input type="text" value="Filipino" required>
-</div>
-<div class="form-group">
-<label>Mother Tongue / Dialect:</label>
-<input type="text" placeholder="e.g. Ibaloi, Ifugao, Ilokano, Tagalog" required>
-</div>
-<div class="form-group">
-<label>Complete Address:</label>
-<input type="text" placeholder="House No., Street/Purok, Barangay, City/Municipality" required>
-</div>
- 
-          <div class="section-header">2. Parent & Guardian Information</div>
-<div class="form-group">
-<label>Father's Full Name:</label>
-<input type="text" placeholder="Last Name, First Name, M.I.">
-</div>
-<div class="form-group">
-<label>Mother's Maiden Name:</label>
-<input type="text" placeholder="Mother's Full Maiden Name" required>
-</div>
-<div class="form-group">
-<label>Parent / Guardian Name:</label>
-<input type="text" placeholder="Full Name of Primary Contact" required>
-</div>
-<div class="form-group">
-<label>Parent/Guardian Occupation:</label>
-<input type="text" placeholder="e.g. Farmer, Employee, Self-Employed">
-</div>
-<div class="form-group">
-<label>Emergency Contact Number:</label>
-<input type="tel" placeholder="09XXXXXXXXX" required>
-</div>
-<div class="form-group">
-<label>Is your family a 4Ps Household Beneficiary?</label>
-<select><option>No</option><option>Yes</option></select>
-</div>
- 
-          <div class="section-header">3. Academic History & Track Selection</div>
-<div class="form-group">
-<label>Student Status / Type:</label>
-<select>
-<option>Promoted Grade 9 Student (Regular)</option>
-<option>Transferee</option>
-<option>Returning / Balik-Aral</option>
-</select>
-</div>
-<div class="form-group">
-<label>Last School Attended:</label>
-<input type="text" placeholder="Name of Previous School" required>
-</div>
-<div class="form-group">
-<label>Grade 9 General Average:</label>
-<input type="number" step="0.1" min="75" max="100" placeholder="e.g. 90" required>
-</div>
-<div class="form-group">
-<label>Preferred Senior High Track/Strand (1st Choice):</label>
-<select>
-<option value="TVL">TVL - Technical-Vocational Livelihood</option>
-<option value="HUMSS">HUMSS - Humanities & Social Sciences</option>
-<option value="STEM">STEM - Science & Technology</option>
-<option value="ABM">ABM - Accountancy & Business</option>
-<option value="GAS">GAS - General Academic Strand</option>
-</select>
-</div>
-<div class="form-group">
-<label>Preferred Senior High Track/Strand (2nd Choice):</label>
-<select>
-<option value="GAS">GAS - General Academic Strand</option>
-<option value="TVL">TVL - Technical-Vocational Livelihood</option>
-<option value="HUMSS">HUMSS - Humanities & Social Sciences</option>
-<option value="STEM">STEM - Science & Technology</option>
-<option value="ABM">ABM - Accountancy & Business</option>
-</select>
-</div>
- 
-          <div class="section-header">4. Document Checklist</div>
-<div class="form-group">
-<label>Upload and check submitted documents:</label>
-<div class="checkbox-group">
-<!-- Document 1 -->
-<div class="document-upload-item">
-<label class="checkbox-item">
-<input type="checkbox" required> Form 138 (Grade 9 Report Card)
-</label>
-<input type="file" accept=".pdf,image/*" required>
-</div>
- 
-              <!-- Document 2 -->
-<div class="document-upload-item">
-<label class="checkbox-item">
-<input type="checkbox" required> PSA Birth Certificate (Photocopy)
-</label>
-<input type="file" accept=".pdf,image/*" required>
-</div>
- 
-              <!-- Document 3 -->
-<div class="document-upload-item">
-<label class="checkbox-item">
-<input type="checkbox"> Certificate of Good Moral Character
-</label>
-<input type="file" accept=".pdf,image/*">
-</div>
- 
+
+        <div class="brand">
+            <h2>Ambaguio High School</h2>
+            <span>Grade 10 Enrollment System</span>
+        </div>
+
+        <!-- HAMBURGER MENU -->
+        <div class="menu-wrapper" id="menuWrapper">
+
+            <button class="menu-toggle-btn"
+                    id="menuBtn"
+                    onclick="toggleMenu()"
+                    title="Menu"
+                    aria-label="Open navigation menu">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+            <!-- DROPDOWN MENU -->
+            <div class="dropdown-menu" id="dropdownMenu">
+
+                <!-- GUEST ACCOUNT -->
+                <div class="profile-header">
+
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+
+                    <div class="profile-info">
+                        <span class="profile-name">Welcome, Student!</span>
+                        <span class="profile-role">Guest Access · Not signed in</span>
+                    </div>
+
+                </div>
+
+                <!-- NAVIGATION -->
+                <div class="dropdown-category">Navigation</div>
+
+                <button class="dropdown-item"
+                        onclick="navigateTo('home-view')">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </button>
+
+                <button class="dropdown-item"
+                        onclick="navigateTo('enroll-view')">
+                    <i class="fa-solid fa-file-pen"></i>
+                    Enrollment Form
+                </button>
+
+                <button class="dropdown-item"
+                        onclick="navigateTo('admin-view')">
+                    <i class="fa-solid fa-user-shield"></i>
+                    Admin Portal
+                </button>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- INFORMATION -->
+                <div class="dropdown-category">Information</div>
+
+                <button class="dropdown-item"
+                        onclick="navigateTo('about-view')">
+                    <i class="fa-solid fa-school"></i>
+                    About AHS
+                </button>
+
+                <button class="dropdown-item"
+                        onclick="navigateTo('guidelines-view')">
+                    <i class="fa-solid fa-list-check"></i>
+                    Enrollment Guidelines
+                </button>
+
+                <button class="dropdown-item"
+                        onclick="navigateTo('contact-view')">
+                    <i class="fa-solid fa-headset"></i>
+                    Contact / Help Desk
+                </button>
+
             </div>
-</div>
- 
-          <button type="submit" class="btn btn-success">Submit Enrollment Application</button>
-</form>
-</section>
- 
-      <section id="admin-view" class="view-section card">
-<h2 style="font-size: 1.15rem;">Admin Dashboard</h2>
-<p class="subtitle">Registered Student Masterlist</p>
-<table class="data-table">
-<thead>
-<tr>
-<th>LRN</th>
-<th>Name</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>101234567890</td>
-<td>Student, A.</td>
-<td><span class="badge pending">Pending</span></td>
-</tr>
-<tr>
-<td>101234567891</td>
-<td>Student, B.</td>
-<td><span class="badge approved">Enrolled</span></td>
-</tr>
-</tbody>
-</table>
-</section>
- 
-      <section id="about-view" class="view-section card">
-<h2 style="font-size: 1.15rem;">About Ambaguio High School</h2>
-<p class="subtitle">Ambaguio, Nueva Vizcaya</p>
-<hr>
-<p style="font-size: 0.85rem; line-height: 1.5; color: #334155;">
-<strong>Ambaguio High School</strong> is committed to providing accessible, high-quality secondary education to students in Ambaguio, Nueva Vizcaya, empowering them with practical academic and technical skills.
-</p>
-</section>
- 
-      <section id="guidelines-view" class="view-section card">
-<h2 style="font-size: 1.15rem;">Enrollment Guidelines</h2>
-<p class="subtitle">Grade 10 Requirements & Policies</p>
-<hr>
-<ul style="font-size: 0.85rem; padding-left: 18px; line-height: 1.8; color: #334155;">
-<li>Grade 9 Report Card (Form 138)</li>
-<li>PSA Birth Certificate (Photocopy)</li>
-<li>Learner Reference Number (LRN) Verification</li>
-<li>Certificate of Good Moral Character</li>
-</ul>
-</section>
- 
-      <section id="contact-view" class="view-section card">
-<h2 style="font-size: 1.15rem;">Contact</h2>
-<p class="subtitle">Help Desk Information</p>
-<hr>
-<div class="contact-card">
-<p style="font-size: 0.85rem; line-height: 1.8; color: #334155;">
-<strong>Email:</strong> AmbaguioHighSchool.edu.ph<br>
-<strong>Contact:</strong> 09876543212<br>
-<strong>Location:</strong> Ambaguio Nueva Vizcaya
-</p>
-</div> 
-</section>
- 
+        </div>
+
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="portrait-body">
+
+        <!-- HOME PAGE: FIRST PAGE TO DISPLAY -->
+        <section id="home-view"
+                 class="view-section active-section card">
+
+            <h2 style="font-size: 1.15rem;">
+                Welcome to AHS
+            </h2>
+
+            <p class="subtitle">
+                Grade 10 Online Enrollment Portal
+            </p>
+
+            <hr>
+
+            <p style="font-size: 0.85rem; line-height: 1.5; color: #475569;">
+                Welcome! You can begin your Grade 10 registration
+                without creating or logging in to an account.
+                Select Start Registration to fill out the enrollment
+                form, or use the menu to view school information
+                and guidelines.
+            </p>
+
+            <!-- START REGISTRATION -->
+            <div class="tile-grid">
+
+                <div class="tile-item"
+                     onclick="navigateTo('enroll-view')">
+
+                    <i class="fa-solid fa-file-pen"></i>
+
+                    <div>
+                        <h3>Start Registration</h3>
+
+                        <span style="font-size: 0.72rem; color: #64748b;">
+                            Fill Out Grade 10 Form
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ENROLLMENT FORM -->
+        <section id="enroll-view"
+                 class="view-section card">
+
+            <h2 style="font-size: 1.15rem;">
+                Grade 10 Registration
+            </h2>
+
+            <p class="subtitle">
+                Please complete all required information below.
+            </p>
+
+            <form class="form-portrait"
+                  onsubmit="handleEnrollmentSubmit(event)">
+
+                <!-- PERSONAL DETAILS -->
+                <div class="section-header">
+                    1. Personal Details
+                </div>
+
+                <div class="form-group">
+                    <label>Learner Reference Number (LRN):</label>
+                    <input type="text"
+                           placeholder="12-digit LRN"
+                           required
+                           pattern="[0-9]{12}"
+                           maxlength="12">
+                </div>
+
+                <div class="form-group">
+                    <label>Full Name:</label>
+                    <input type="text"
+                           placeholder="Last Name, First Name, Middle Name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <select required>
+                        <option value="">Select Gender</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Date of Birth:</label>
+                    <input type="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nationality:</label>
+                    <input type="text"
+                           value="Filipino"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mother Tongue / Dialect:</label>
+                    <input type="text"
+                           placeholder="e.g. Ibaloi, Ifugao, Ilokano, Tagalog"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Complete Address:</label>
+                    <input type="text"
+                           placeholder="House No., Street/Purok, Barangay, City/Municipality"
+                           required>
+                </div>
+
+                <!-- PARENT AND GUARDIAN -->
+                <div class="section-header">
+                    2. Parent & Guardian Information
+                </div>
+
+                <div class="form-group">
+                    <label>Father's Full Name:</label>
+                    <input type="text"
+                           placeholder="Last Name, First Name, M.I.">
+                </div>
+
+                <div class="form-group">
+                    <label>Mother's Maiden Name:</label>
+                    <input type="text"
+                           placeholder="Mother's Full Maiden Name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Parent / Guardian Name:</label>
+                    <input type="text"
+                           placeholder="Full Name of Primary Contact"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Parent/Guardian Occupation:</label>
+                    <input type="text"
+                           placeholder="e.g. Farmer, Employee, Self-Employed">
+                </div>
+
+                <div class="form-group">
+                    <label>Emergency Contact Number:</label>
+                    <input type="tel"
+                           placeholder="09XXXXXXXXX"
+                           pattern="09[0-9]{9}"
+                           maxlength="11"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Is your family a 4Ps Household Beneficiary?
+                    </label>
+
+                    <select required>
+                        <option value="">Select Answer</option>
+                        <option>No</option>
+                        <option>Yes</option>
+                    </select>
+                </div>
+
+                <!-- ACADEMIC HISTORY -->
+                <div class="section-header">
+                    3. Academic History & Track Selection
+                </div>
+
+                <div class="form-group">
+                    <label>Student Status / Type:</label>
+
+                    <select required>
+                        <option value="">
+                            Select Student Status
+                        </option>
+
+                        <option>
+                            Promoted Grade 9 Student (Regular)
+                        </option>
+
+                        <option>Transferee</option>
+
+                        <option>Returning / Balik-Aral</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Last School Attended:</label>
+                    <input type="text"
+                           placeholder="Name of Previous School"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Grade 9 General Average:</label>
+                    <input type="number"
+                           step="0.1"
+                           min="75"
+                           max="100"
+                           placeholder="e.g. 90"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Preferred Senior High Track/Strand (1st Choice):
+                    </label>
+
+                    <select required>
+                        <option value="">Select First Choice</option>
+                        <option value="TVL">
+                            TVL - Technical-Vocational Livelihood
+                        </option>
+                        <option value="HUMSS">
+                            HUMSS - Humanities & Social Sciences
+                        </option>
+                        <option value="STEM">
+                            STEM - Science & Technology
+                        </option>
+                        <option value="ABM">
+                            ABM - Accountancy & Business
+                        </option>
+                        <option value="GAS">
+                            GAS - General Academic Strand
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Preferred Senior High Track/Strand (2nd Choice):
+                    </label>
+
+                    <select required>
+                        <option value="">Select Second Choice</option>
+                        <option value="GAS">
+                            GAS - General Academic Strand
+                        </option>
+                        <option value="TVL">
+                            TVL - Technical-Vocational Livelihood
+                        </option>
+                        <option value="HUMSS">
+                            HUMSS - Humanities & Social Sciences
+                        </option>
+                        <option value="STEM">
+                            STEM - Science & Technology
+                        </option>
+                        <option value="ABM">
+                            ABM - Accountancy & Business
+                        </option>
+                    </select>
+                </div>
+
+                <!-- DOCUMENT CHECKLIST -->
+                <div class="section-header">
+                    4. Document Checklist
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Upload and check submitted documents:
+                    </label>
+
+                    <div class="checkbox-group">
+
+                        <!-- FORM 138 -->
+                        <div class="document-upload-item">
+
+                            <label class="checkbox-item">
+                                <input type="checkbox" required>
+                                Form 138 (Grade 9 Report Card)
+                            </label>
+
+                            <input type="file"
+                                   accept=".pdf,image/*"
+                                   required>
+                        </div>
+
+                        <!-- PSA -->
+                        <div class="document-upload-item">
+
+                            <label class="checkbox-item">
+                                <input type="checkbox" required>
+                                PSA Birth Certificate (Photocopy)
+                            </label>
+
+                            <input type="file"
+                                   accept=".pdf,image/*"
+                                   required>
+                        </div>
+
+                        <!-- GOOD MORAL -->
+                        <div class="document-upload-item">
+
+                            <label class="checkbox-item">
+                                <input type="checkbox">
+                                Certificate of Good Moral Character
+                            </label>
+
+                            <input type="file"
+                                   accept=".pdf,image/*">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <button type="submit"
+                        class="btn btn-success">
+                    Submit Enrollment Application
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- ADMIN PORTAL -->
+        <section id="admin-view"
+                 class="view-section card">
+
+            <h2 style="font-size: 1.15rem;">
+                Admin Dashboard
+            </h2>
+
+            <p class="subtitle">
+                Registered Student Masterlist
+            </p>
+
+            <table class="data-table">
+
+                <thead>
+                    <tr>
+                        <th>LRN</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>101234567890</td>
+                        <td>Student, A.</td>
+                        <td>
+                            <span class="badge pending">
+                                Pending
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>101234567891</td>
+                        <td>Student, B.</td>
+                        <td>
+                            <span class="badge approved">
+                                Enrolled
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- ABOUT SCHOOL -->
+        <section id="about-view"
+                 class="view-section card">
+
+            <h2 style="font-size: 1.15rem;">
+                About Ambaguio High School
+            </h2>
+
+            <p class="subtitle">
+                Ambaguio, Nueva Vizcaya
+            </p>
+
+            <hr>
+
+            <p style="font-size: 0.85rem; line-height: 1.5; color: #334155;">
+
+                <strong>Ambaguio High School</strong> is committed
+                to providing accessible, high-quality secondary
+                education to students in Ambaguio, Nueva Vizcaya,
+                empowering them with practical academic and
+                technical skills.
+
+            </p>
+
+        </section>
+
+        <!-- ENROLLMENT GUIDELINES -->
+        <section id="guidelines-view"
+                 class="view-section card">
+
+            <h2 style="font-size: 1.15rem;">
+                Enrollment Guidelines
+            </h2>
+
+            <p class="subtitle">
+                Grade 10 Requirements & Policies
+            </p>
+
+            <hr>
+
+            <ul style="font-size: 0.85rem;
+                       padding-left: 18px;
+                       line-height: 1.8;
+                       color: #334155;">
+
+                <li>Grade 9 Report Card (Form 138)</li>
+
+                <li>PSA Birth Certificate (Photocopy)</li>
+
+                <li>Learner Reference Number (LRN) Verification</li>
+
+                <li>Certificate of Good Moral Character</li>
+
+            </ul>
+
+        </section>
+
+        <!-- CONTACT / HELP DESK -->
+        <section id="contact-view"
+                 class="view-section card">
+
+            <h2 style="font-size: 1.15rem;">
+                Contact
+            </h2>
+
+            <p class="subtitle">
+                Help Desk Information
+            </p>
+
+            <hr>
+
+            <div class="contact-card">
+
+                <p style="font-size: 0.85rem;
+                          line-height: 1.8;
+                          color: #334155;">
+
+                    <strong>Email:</strong>
+                    AmbaguioHighSchool.edu.ph
+
+                    <br>
+
+                    <strong>Contact:</strong>
+                    09876543212
+
+                    <br>
+
+                    <strong>Location:</strong>
+                    Ambaguio, Nueva Vizcaya
+
+                </p>
+
+            </div>
+
+        </section>
+
     </div>
+
 </div>
- 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('dropdownMenu');
-      menu.classList.toggle('show');
+
+<!-- JAVASCRIPT -->
+<script>
+
+/* OPEN AND CLOSE MENU */
+function toggleMenu() {
+
+    const menu = document.getElementById('dropdownMenu');
+
+    menu.classList.toggle('show');
+
+}
+
+/* NAVIGATION BETWEEN PAGES */
+function navigateTo(viewId) {
+
+    const sections = document.querySelectorAll('.view-section');
+
+    sections.forEach(section => {
+        section.classList.remove('active-section');
+    });
+
+    const selectedSection = document.getElementById(viewId);
+
+    if (selectedSection) {
+        selectedSection.classList.add('active-section');
     }
- 
-    function navigateTo(viewId) {
-      const sections = document.querySelectorAll('.view-section');
-      sections.forEach(sec => sec.classList.remove('active-section'));
-      document.getElementById(viewId).classList.add('active-section');
-      document.getElementById('dropdownMenu').classList.remove('show');
+
+    document.getElementById('dropdownMenu').classList.remove('show');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+}
+
+/* ENROLLMENT FORM SUBMISSION */
+function handleEnrollmentSubmit(event) {
+
+    event.preventDefault();
+
+    alert(
+        'Your registration form has been submitted. Please wait for the school to verify your information and documents.'
+    );
+
+    event.target.reset();
+
+    navigateTo('home-view');
+
+}
+
+/* CLOSE MENU WHEN CLICKING OUTSIDE */
+window.addEventListener('click', function(event) {
+
+    const menu = document.getElementById('dropdownMenu');
+
+    const menuButton = document.getElementById('menuBtn');
+
+    if (
+        menu &&
+        menuButton &&
+        !menu.contains(event.target) &&
+        !menuButton.contains(event.target)
+    ) {
+
+        menu.classList.remove('show');
+
     }
- 
-    function handleLogout() {
-      document.getElementById('dropdownMenu').classList.remove('show');
-      document.getElementById('menuWrapper').style.display = 'none';
-      navigateTo('login-view');
-    }
- 
-    function handleAccountSwitch() {
-      document.getElementById('dropdownMenu').classList.remove('show');
-      document.getElementById('menuWrapper').style.display = 'none';
-      navigateTo('login-view');
-    }
- 
-    function handleLoginSubmit(event) {
-      event.preventDefault();
-      const usernameInput = document.getElementById('loginUsername').value;
-      if (usernameInput.trim() !== "") {
-        document.getElementById('currentUserName').innerText = usernameInput;
-        document.getElementById('profileDisplayName').innerText = usernameInput;
-      }
-      document.getElementById('menuWrapper').style.display = 'block';
-      navigateTo('home-view');
-    }
- 
-    function handleEnrollmentSubmit(event) {
-      event.preventDefault();
-      navigateTo('home-view');
-    }
- 
-    window.onclick = function(event) {
-      if (!event.target.matches('#menuBtn') && !event.target.matches('#menuBtn *')) {
-        const menu = document.getElementById('dropdownMenu');
-        if (menu && menu.classList.contains('show')) {
-          menu.classList.remove('show');
-        }
-      }
-    }
+
+});
+
 </script>
+
 </body>
 </html>
