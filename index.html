@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ambaguio High School - Grade 10 Enrollment System</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 * {
@@ -277,6 +278,7 @@ hr {
 .form-group select:focus {
     outline: none;
     border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
 }
 
 /* DOCUMENT UPLOAD */
@@ -310,6 +312,28 @@ hr {
     font-size: 0.82rem;
     font-weight: 600;
     color: #334155;
+}
+
+/* PORTAL SIGN IN BUTTON */
+.signin-entry {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1e40af;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.signin-entry:hover {
+    background: #eff6ff;
 }
 
 /* HOME PAGE */
@@ -491,7 +515,7 @@ hr {
     margin-bottom: 10px;
 }
 
-/* MOBILE */
+/* MOBILE RESPONSIVE */
 @media(max-width:360px) {
     .navbar {
         padding: 10px;
@@ -526,8 +550,13 @@ hr {
     <nav class="navbar">
 
         <div class="nav-logo-container">
-            <img src="AMBAGUIO.jpg" alt="Ambaguio Logo" class="school-logo">
-            <img src="DEPED.jpg" alt="DepEd Logo" class="school-logo">
+            <img src="AMBAGUIO.jpg"
+                 alt="Ambaguio Logo"
+                 class="school-logo">
+
+            <img src="DEPED.jpg"
+                 alt="DepEd Logo"
+                 class="school-logo">
         </div>
 
         <div class="brand">
@@ -547,17 +576,28 @@ hr {
 
             <div class="dropdown-menu" id="dropdownMenu">
 
+                <!-- ACCOUNT PROFILE / PORTAL SIGN IN -->
                 <div class="profile-header"
+                     role="button"
+                     tabindex="0"
                      onclick="navigateTo('login-view')"
-                     title="Open Portal Sign In">
+                     onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateTo('login-view');}">
 
                     <div class="profile-avatar">
-                        <i class="fa-solid fa-user-plus" id="accountAvatarIcon"></i>
+                        <i class="fa-solid fa-user-plus"
+                           id="accountAvatarIcon"></i>
                     </div>
 
                     <div class="profile-info">
-                        <span class="profile-name" id="accountMenuName">Log in!</span>
-                        <span class="profile-role" id="accountMenuRole">Not signed in</span>
+                        <span class="profile-name"
+                              id="accountMenuName">
+                            Log in!
+                        </span>
+
+                        <span class="profile-role"
+                              id="accountMenuRole">
+                            Not signed in
+                        </span>
                     </div>
 
                 </div>
@@ -566,41 +606,60 @@ hr {
                         id="logoutMenuItem"
                         onclick="handleLogout()"
                         style="display:none">
-                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Log Out
                 </button>
 
-                <div class="dropdown-category">Navigation</div>
+                <div class="dropdown-category">
+                    Navigation
+                </div>
 
-                <button class="dropdown-item" onclick="navigateTo('home-view')">
-                    <i class="fa-solid fa-house"></i> Home
+                <button class="dropdown-item"
+                        onclick="navigateTo('home-view')">
+                    <i class="fa-solid fa-house"></i>
+                    Home
                 </button>
 
-                <button class="dropdown-item" onclick="navigateTo('enroll-view')">
-                    <i class="fa-solid fa-file-pen"></i> Enrollment Form
+                <button class="dropdown-item"
+                        onclick="navigateTo('enroll-view')">
+                    <i class="fa-solid fa-file-pen"></i>
+                    Enrollment Form
                 </button>
 
-                <button class="dropdown-item" onclick="navigateTo('status-view')">
-                    <i class="fa-solid fa-clipboard-check"></i> Application Status
+                <button class="dropdown-item"
+                        onclick="navigateTo('status-view')">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    Application Status
                 </button>
 
-                <button class="dropdown-item" onclick="navigateTo('admin-view')">
-                    <i class="fa-solid fa-user-shield"></i> Admin Portal
+                <button class="dropdown-item"
+                        onclick="navigateTo('admin-view')">
+                    <i class="fa-solid fa-user-shield"></i>
+                    Admin Portal
                 </button>
 
                 <div class="dropdown-divider"></div>
 
-                <div class="dropdown-category">Information</div>
+                <div class="dropdown-category">
+                    Information
+                </div>
 
-                <button class="dropdown-item" onclick="navigateTo('about-view')">
-                    <i class="fa-solid fa-school"></i> About AHS
+                <button class="dropdown-item"
+                        onclick="navigateTo('about-view')">
+                    <i class="fa-solid fa-school"></i>
+                    About AHS
                 </button>
 
-                <button class="dropdown-item" onclick="navigateTo('guidelines-view')">
-                    <i class="fa-solid fa-list-check"></i> Enrollment Guidelines
+                <button class="dropdown-item"
+                        onclick="navigateTo('guidelines-view')">
+                    <i class="fa-solid fa-list-check"></i>
+                    Enrollment Guidelines
                 </button>
 
-                <button class="dropdown-item" onclick="navigateTo('contact-view')">
-                    <i class="fa-solid fa-headset"></i> Contact / Help Desk
+                <button class="dropdown-item"
+                        onclick="navigateTo('contact-view')">
+                    <i class="fa-solid fa-headset"></i>
+                    Contact / Help Desk
                 </button>
 
             </div>
@@ -611,35 +670,41 @@ hr {
     <main class="portrait-body">
 
         <!-- PORTAL SIGN IN PAGE -->
-        <section id="login-view" class="view-section card">
+        <section id="login-view"
+                 class="view-section card">
 
-            <h2 style="font-size:1.15rem;color:#1e3a8a;text-align:center">
+            <h2 style="font-size:1.15rem;text-align:center;color:#1e3a8a">
                 Portal Sign In
             </h2>
 
             <p class="subtitle" style="text-align:center">
-                Enter your student details to sign in to the portal.
+                Sign in using your student information.
             </p>
 
             <hr>
 
-            <form class="form-portrait" onsubmit="handleLoginSubmit(event)">
+            <form class="form-portrait"
+                  onsubmit="handleLoginSubmit(event)">
 
                 <div class="form-group">
-                    <label for="loginStudentName">Student Full Name:</label>
+                    <label for="loginStudentName">
+                        Student Full Name:
+                    </label>
+
                     <input type="text"
                            id="loginStudentName"
-                           name="loginStudentName"
                            placeholder="Enter your full name"
                            autocomplete="name"
                            required>
                 </div>
 
                 <div class="form-group">
-                    <label for="loginLrn">LRN / Student ID:</label>
+                    <label for="loginLrn">
+                        LRN / Student ID:
+                    </label>
+
                     <input type="text"
                            id="loginLrn"
-                           name="loginLrn"
                            placeholder="Enter your 12-digit LRN"
                            inputmode="numeric"
                            pattern="[0-9]{12}"
@@ -650,25 +715,31 @@ hr {
                 <button type="submit"
                         class="btn btn-primary"
                         style="margin-top:10px">
-                    <i class="fa-solid fa-right-to-bracket"></i> Log In
+
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Log In
+
                 </button>
 
             </form>
 
             <p style="font-size:.75rem;color:#64748b;line-height:1.5;margin-top:12px">
-                You may also continue as a guest and start registration from the Home page. This sign-in is a front-end demonstration and does not verify student accounts against a school database.
+                You can also continue without signing in and register as a guest.
             </p>
 
             <button class="btn btn-primary"
-                    style="margin-top:12px"
+                    style="margin-top:10px"
                     onclick="navigateTo('home-view')">
+
                 Continue as Guest
+
             </button>
 
         </section>
 
         <!-- HOME PAGE -->
-        <section id="home-view" class="view-section active-section card">
+        <section id="home-view"
+                 class="view-section active-section card">
 
             <h2 style="font-size:1.15rem">
                 Welcome to AHS
@@ -686,12 +757,14 @@ hr {
 
             <div class="tile-grid">
 
-                <div class="tile-item" onclick="navigateTo('enroll-view')">
+                <div class="tile-item"
+                     onclick="navigateTo('enroll-view')">
 
                     <i class="fa-solid fa-file-pen"></i>
 
                     <div>
                         <h3>Start Registration</h3>
+
                         <span style="font-size:0.72rem;color:#64748b">
                             Registration Form
                         </span>
@@ -701,10 +774,21 @@ hr {
 
             </div>
 
+            <!-- VISIBLE PORTAL SIGN IN BUTTON -->
+            <button class="signin-entry"
+                    type="button"
+                    onclick="navigateTo('login-view')">
+
+                <i class="fa-solid fa-right-to-bracket"></i>
+                Portal Sign In
+
+            </button>
+
         </section>
 
         <!-- ENROLLMENT FORM -->
-        <section id="enroll-view" class="view-section card">
+        <section id="enroll-view"
+                 class="view-section card">
 
             <h2 style="font-size:1.15rem">
                 Grade 10 Registration
@@ -718,12 +802,14 @@ hr {
                   id="enrollmentForm"
                   onsubmit="handleEnrollmentSubmit(event)">
 
+                <!-- PERSONAL DETAILS -->
                 <div class="section-header">
                     1. Personal Details
                 </div>
 
                 <div class="form-group">
                     <label>Learner Reference Number (LRN):</label>
+
                     <input type="text"
                            name="lrn"
                            placeholder="12-digit LRN"
@@ -734,6 +820,7 @@ hr {
 
                 <div class="form-group">
                     <label>Full Name:</label>
+
                     <input type="text"
                            name="fullName"
                            placeholder="Last Name, First Name, Middle Name"
@@ -742,6 +829,7 @@ hr {
 
                 <div class="form-group">
                     <label>Gender:</label>
+
                     <select name="gender" required>
                         <option value="">Select Gender</option>
                         <option>Female</option>
@@ -756,6 +844,7 @@ hr {
 
                 <div class="form-group">
                     <label>Nationality:</label>
+
                     <input type="text"
                            name="nationality"
                            value="Filipino"
@@ -764,6 +853,7 @@ hr {
 
                 <div class="form-group">
                     <label>Mother Tongue / Dialect:</label>
+
                     <input type="text"
                            name="motherTongue"
                            placeholder="e.g. Ibaloi, Ifugao, Ilokano, Tagalog"
@@ -772,18 +862,21 @@ hr {
 
                 <div class="form-group">
                     <label>Complete Address:</label>
+
                     <input type="text"
                            name="address"
                            placeholder="House No., Street/Purok, Barangay, Municipality"
                            required>
                 </div>
 
+                <!-- PARENT AND GUARDIAN INFORMATION -->
                 <div class="section-header">
                     2. Parent & Guardian Information
                 </div>
 
                 <div class="form-group">
                     <label>Father's Full Name:</label>
+
                     <input type="text"
                            name="fatherName"
                            placeholder="Last Name, First Name, M.I.">
@@ -791,6 +884,7 @@ hr {
 
                 <div class="form-group">
                     <label>Mother's Maiden Name:</label>
+
                     <input type="text"
                            name="motherName"
                            placeholder="Mother's Full Maiden Name"
@@ -799,6 +893,7 @@ hr {
 
                 <div class="form-group">
                     <label>Parent / Guardian Name:</label>
+
                     <input type="text"
                            name="guardianName"
                            placeholder="Full Name of Primary Contact"
@@ -807,6 +902,7 @@ hr {
 
                 <div class="form-group">
                     <label>Parent/Guardian Occupation:</label>
+
                     <input type="text"
                            name="occupation"
                            placeholder="e.g. Farmer, Employee, Self-Employed">
@@ -814,6 +910,7 @@ hr {
 
                 <div class="form-group">
                     <label>Emergency Contact Number:</label>
+
                     <input type="tel"
                            name="contactNumber"
                            placeholder="09XXXXXXXXX"
@@ -824,6 +921,7 @@ hr {
 
                 <div class="form-group">
                     <label>Is your family a 4Ps Household Beneficiary?</label>
+
                     <select name="fourPs" required>
                         <option value="">Select Answer</option>
                         <option>No</option>
@@ -831,12 +929,14 @@ hr {
                     </select>
                 </div>
 
+                <!-- ACADEMIC HISTORY -->
                 <div class="section-header">
                     3. Academic History & Track Selection
                 </div>
 
                 <div class="form-group">
                     <label>Student Status / Type:</label>
+
                     <select name="studentType" required>
                         <option value="">Select Student Status</option>
                         <option>Promoted Grade 9 Student (Regular)</option>
@@ -847,6 +947,7 @@ hr {
 
                 <div class="form-group">
                     <label>Last School Attended:</label>
+
                     <input type="text"
                            name="lastSchool"
                            placeholder="Name of Previous School"
@@ -855,6 +956,7 @@ hr {
 
                 <div class="form-group">
                     <label>Grade 9 General Average:</label>
+
                     <input type="number"
                            name="average"
                            step="0.1"
@@ -866,6 +968,7 @@ hr {
 
                 <div class="form-group">
                     <label>Preferred Senior High Track/Strand (1st Choice):</label>
+
                     <select name="firstChoice" required>
                         <option value="">Select First Choice</option>
                         <option>TVL - Technical-Vocational Livelihood</option>
@@ -878,6 +981,7 @@ hr {
 
                 <div class="form-group">
                     <label>Preferred Senior High Track/Strand (2nd Choice):</label>
+
                     <select name="secondChoice" required>
                         <option value="">Select Second Choice</option>
                         <option>GAS - General Academic Strand</option>
@@ -888,6 +992,7 @@ hr {
                     </select>
                 </div>
 
+                <!-- DOCUMENT CHECKLIST -->
                 <div class="section-header">
                     4. Document Checklist
                 </div>
@@ -938,8 +1043,11 @@ hr {
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success">
+                <button type="submit"
+                        class="btn btn-success">
+
                     Submit Enrollment Application
+
                 </button>
 
             </form>
@@ -947,7 +1055,8 @@ hr {
         </section>
 
         <!-- APPLICATION STATUS PAGE -->
-        <section id="status-view" class="view-section card">
+        <section id="status-view"
+                 class="view-section card">
 
             <h2 style="font-size:1.15rem">
                 Application Status
@@ -959,7 +1068,9 @@ hr {
 
             <hr>
 
-            <div id="statusDetails" class="status-panel" aria-live="polite">
+            <div id="statusDetails"
+                 class="status-panel"
+                 aria-live="polite">
 
                 <div class="status-heading">
                     No application found
@@ -975,13 +1086,16 @@ hr {
             <button class="btn btn-primary"
                     style="margin-top:14px"
                     onclick="navigateTo('home-view')">
+
                 Back to Home
+
             </button>
 
         </section>
 
         <!-- ADMIN PORTAL -->
-        <section id="admin-view" class="view-section card">
+        <section id="admin-view"
+                 class="view-section card">
 
             <h2 style="font-size:1.15rem">
                 Admin Dashboard
@@ -1007,11 +1121,13 @@ hr {
                 </thead>
 
                 <tbody id="adminRecordsBody">
+
                     <tr>
                         <td colspan="4" class="admin-empty">
                             No registrations submitted yet.
                         </td>
                     </tr>
+
                 </tbody>
 
             </table>
@@ -1019,7 +1135,8 @@ hr {
         </section>
 
         <!-- ABOUT SCHOOL -->
-        <section id="about-view" class="view-section card">
+        <section id="about-view"
+                 class="view-section card">
 
             <h2 style="font-size:1.15rem">
                 About Ambaguio High School
@@ -1042,7 +1159,8 @@ hr {
         </section>
 
         <!-- ENROLLMENT GUIDELINES -->
-        <section id="guidelines-view" class="view-section card">
+        <section id="guidelines-view"
+                 class="view-section card">
 
             <h2 style="font-size:1.15rem">
                 Enrollment Guidelines
@@ -1054,7 +1172,10 @@ hr {
 
             <hr>
 
-            <ul style="font-size:0.85rem;padding-left:18px;line-height:1.8;color:#334155">
+            <ul style="font-size:0.85rem;
+                       padding-left:18px;
+                       line-height:1.8;
+                       color:#334155">
 
                 <li>Grade 9 Report Card (Form 138)</li>
                 <li>PSA Birth Certificate (Photocopy)</li>
@@ -1066,7 +1187,8 @@ hr {
         </section>
 
         <!-- CONTACT -->
-        <section id="contact-view" class="view-section card">
+        <section id="contact-view"
+                 class="view-section card">
 
             <h2 style="font-size:1.15rem">
                 Contact
@@ -1081,16 +1203,20 @@ hr {
             <div class="contact-card">
 
                 <p style="font-size:0.85rem;line-height:1.8;color:#334155">
+
                     <strong>Email:</strong>
                     AmbaguioHighSchool.edu.ph
+
                     <br>
 
                     <strong>Contact:</strong>
                     09876543212
+
                     <br>
 
                     <strong>Location:</strong>
                     Ambaguio, Nueva Vizcaya
+
                 </p>
 
             </div>
@@ -1108,7 +1234,7 @@ const APPLICATIONS_KEY = "ahsGrade10Applications";
 const CURRENT_APPLICATION_KEY = "ahsCurrentApplicationId";
 const STUDENT_SESSION_KEY = "ahsStudentDemoSession";
 
-/* GET SAVED APPLICATIONS */
+/* GET APPLICATIONS */
 function getApplications() {
 
     try {
@@ -1139,7 +1265,7 @@ function saveApplications(records) {
 
 }
 
-/* HTML SAFETY */
+/* PREVENT HTML INJECTION */
 function escapeHTML(value) {
 
     return String(value ?? "").replace(/[&<>"']/g, character => ({
@@ -1154,13 +1280,20 @@ function escapeHTML(value) {
 
 }
 
-/* UPDATE THE MENU ACCOUNT LABEL */
+/* UPDATE ACCOUNT NAME IN MENU */
 function updateAccountMenu() {
 
-    const nameElement = document.getElementById("accountMenuName");
-    const roleElement = document.getElementById("accountMenuRole");
-    const logoutButton = document.getElementById("logoutMenuItem");
-    const avatarIcon = document.getElementById("accountAvatarIcon");
+    const nameElement =
+        document.getElementById("accountMenuName");
+
+    const roleElement =
+        document.getElementById("accountMenuRole");
+
+    const logoutButton =
+        document.getElementById("logoutMenuItem");
+
+    const avatarIcon =
+        document.getElementById("accountAvatarIcon");
 
     let student = null;
 
@@ -1179,28 +1312,39 @@ function updateAccountMenu() {
     if (student && student.name && student.lrn) {
 
         nameElement.textContent = student.name;
+
         roleElement.textContent = "Student Account";
+
         logoutButton.style.display = "flex";
+
         avatarIcon.className = "fa-solid fa-user";
 
     } else {
 
         nameElement.textContent = "Log in!";
+
         roleElement.textContent = "Not signed in";
+
         logoutButton.style.display = "none";
+
         avatarIcon.className = "fa-solid fa-user-plus";
 
     }
 
 }
 
-/* PORTAL SIGN IN DEMO */
+/* PORTAL SIGN IN */
 function handleLoginSubmit(event) {
 
     event.preventDefault();
 
-    const name = document.getElementById("loginStudentName").value.trim();
-    const lrn = document.getElementById("loginLrn").value.trim();
+    const name = document
+        .getElementById("loginStudentName")
+        .value.trim();
+
+    const lrn = document
+        .getElementById("loginLrn")
+        .value.trim();
 
     if (!name || !/^[0-9]{12}$/.test(lrn)) {
 
@@ -1212,18 +1356,15 @@ function handleLoginSubmit(event) {
 
         localStorage.setItem(
             STUDENT_SESSION_KEY,
-            JSON.stringify({ name, lrn })
+            JSON.stringify({
+                name: name,
+                lrn: lrn
+            })
         );
 
     } catch (error) {
 
-        document.getElementById("loginStudentName").setCustomValidity(
-            "Your browser could not save the sign-in session. Please try again."
-        );
-
-        document.getElementById("loginStudentName").reportValidity();
-
-        document.getElementById("loginStudentName").setCustomValidity("");
+        alert("Unable to save the sign-in session. Please try again.");
 
         return;
 
@@ -1235,7 +1376,7 @@ function handleLoginSubmit(event) {
 
 }
 
-/* LOG OUT OF THE LOCAL DEMO SESSION */
+/* LOG OUT */
 function handleLogout() {
 
     localStorage.removeItem(STUDENT_SESSION_KEY);
@@ -1289,10 +1430,8 @@ function navigateTo(viewId) {
     }
 
     window.scrollTo({
-
         top: 0,
         behavior: "smooth"
-
     });
 
 }
@@ -1337,14 +1476,18 @@ function handleEnrollmentSubmit(event) {
 
     });
 
+    /* DOCUMENT FILENAMES */
     const uploadedDocuments = {
 
         form138: form.elements.form138.files[0]?.name || "",
+
         psa: form.elements.psa.files[0]?.name || "",
+
         goodMoral: form.elements.goodMoral.files[0]?.name || ""
 
     };
 
+    /* CREATE APPLICATION */
     const application = {
 
         id: "AHS-" + Date.now(),
@@ -1375,11 +1518,16 @@ function handleEnrollmentSubmit(event) {
     } catch (error) {
 
         document.getElementById("statusDetails").innerHTML = `
-            <div class="status-heading">Unable to save application</div>
+
+            <div class="status-heading">
+                Unable to save application
+            </div>
+
             <p class="status-message">
                 Your browser could not save the registration.
                 Please try again.
             </p>
+
         `;
 
         navigateTo("status-view");
@@ -1390,7 +1538,7 @@ function handleEnrollmentSubmit(event) {
 
     form.reset();
 
-    /* AUTOMATICALLY OPEN STATUS PAGE */
+    /* GO DIRECTLY TO APPLICATION STATUS */
     navigateTo("status-view");
 
 }
@@ -1398,7 +1546,8 @@ function handleEnrollmentSubmit(event) {
 /* APPLICATION STATUS */
 function renderApplicationStatus() {
 
-    const statusBox = document.getElementById("statusDetails");
+    const statusBox =
+        document.getElementById("statusDetails");
 
     const currentId = localStorage.getItem(
         CURRENT_APPLICATION_KEY
@@ -1413,6 +1562,7 @@ function renderApplicationStatus() {
     if (!application) {
 
         statusBox.innerHTML = `
+
             <div class="status-heading">
                 No application found
             </div>
@@ -1421,6 +1571,7 @@ function renderApplicationStatus() {
                 Submit your registration form first.
                 Your application status will appear here.
             </p>
+
         `;
 
         return;
@@ -1466,9 +1617,11 @@ function renderApplicationStatus() {
         </div>
 
         <p style="font-size:0.85rem;color:#334155;margin:8px 0">
+
             <strong>
                 ${escapeHTML(application.details["Full Name"])}
             </strong>
+
         </p>
 
         <span class="badge ${status.toLowerCase()}">
@@ -1496,9 +1649,8 @@ function renderApplicationStatus() {
 /* ADMIN APPLICATION LIST */
 function renderAdminApplications() {
 
-    const tableBody = document.getElementById(
-        "adminRecordsBody"
-    );
+    const tableBody =
+        document.getElementById("adminRecordsBody");
 
     const records = getApplications().sort((a, b) => {
 
@@ -1514,9 +1666,7 @@ function renderAdminApplications() {
             <tr>
 
                 <td colspan="4" class="admin-empty">
-
                     No registrations submitted yet.
-
                 </td>
 
             </tr>
@@ -1552,9 +1702,7 @@ function renderAdminApplications() {
                 <td>
 
                     <span class="badge ${status.toLowerCase()}">
-
                         ${escapeHTML(status)}
-
                     </span>
 
                 </td>
@@ -1632,9 +1780,11 @@ function updateApplicationStatus(applicationId, newStatus) {
 /* CLOSE MENU WHEN CLICKING OUTSIDE */
 window.addEventListener("click", function(event) {
 
-    const menu = document.getElementById("dropdownMenu");
+    const menu =
+        document.getElementById("dropdownMenu");
 
-    const menuButton = document.getElementById("menuBtn");
+    const menuButton =
+        document.getElementById("menuBtn");
 
     if (
         menu &&
@@ -1649,10 +1799,11 @@ window.addEventListener("click", function(event) {
 
 });
 
-/* INITIALIZE */
+/* INITIALIZE SYSTEM */
 document.addEventListener("DOMContentLoaded", function() {
 
     updateAccountMenu();
+
     renderApplicationStatus();
 
 });
