@@ -115,6 +115,7 @@ body {
     display: block;
 }
 
+/* PROFILE HEADER */
 .profile-header {
     background: #f8fafc;
     padding: 14px;
@@ -122,6 +123,11 @@ body {
     align-items: center;
     gap: 10px;
     border-bottom: 1px solid #e2e8f0;
+    cursor: pointer;
+}
+
+.profile-header:hover {
+    background: #eff6ff;
 }
 
 .profile-avatar {
@@ -151,6 +157,7 @@ body {
     color: #64748b;
 }
 
+/* DROPDOWN ITEMS */
 .dropdown-category {
     font-size: 0.65rem;
     font-weight: 700;
@@ -540,18 +547,27 @@ hr {
 
             <div class="dropdown-menu" id="dropdownMenu">
 
-                <div class="profile-header">
+                <div class="profile-header"
+                     onclick="navigateTo('login-view')"
+                     title="Open Portal Sign In">
 
                     <div class="profile-avatar">
-                        <i class="fa-solid fa-user-plus"></i>
+                        <i class="fa-solid fa-user-plus" id="accountAvatarIcon"></i>
                     </div>
 
                     <div class="profile-info">
-                        <span class="profile-name">Log in!</span>
-                        <span class="profile-role">Not signed in</span>
+                        <span class="profile-name" id="accountMenuName">Log in!</span>
+                        <span class="profile-role" id="accountMenuRole">Not signed in</span>
                     </div>
 
                 </div>
+
+                <button class="dropdown-item"
+                        id="logoutMenuItem"
+                        onclick="handleLogout()"
+                        style="display:none">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </button>
 
                 <div class="dropdown-category">Navigation</div>
 
@@ -593,6 +609,63 @@ hr {
     </nav>
 
     <main class="portrait-body">
+
+        <!-- PORTAL SIGN IN PAGE -->
+        <section id="login-view" class="view-section card">
+
+            <h2 style="font-size:1.15rem;color:#1e3a8a;text-align:center">
+                Portal Sign In
+            </h2>
+
+            <p class="subtitle" style="text-align:center">
+                Enter your student details to sign in to the portal.
+            </p>
+
+            <hr>
+
+            <form class="form-portrait" onsubmit="handleLoginSubmit(event)">
+
+                <div class="form-group">
+                    <label for="loginStudentName">Student Full Name:</label>
+                    <input type="text"
+                           id="loginStudentName"
+                           name="loginStudentName"
+                           placeholder="Enter your full name"
+                           autocomplete="name"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginLrn">LRN / Student ID:</label>
+                    <input type="text"
+                           id="loginLrn"
+                           name="loginLrn"
+                           placeholder="Enter your 12-digit LRN"
+                           inputmode="numeric"
+                           pattern="[0-9]{12}"
+                           maxlength="12"
+                           required>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary"
+                        style="margin-top:10px">
+                    <i class="fa-solid fa-right-to-bracket"></i> Log In
+                </button>
+
+            </form>
+
+            <p style="font-size:.75rem;color:#64748b;line-height:1.5;margin-top:12px">
+                You may also continue as a guest and start registration from the Home page. This sign-in is a front-end demonstration and does not verify student accounts against a school database.
+            </p>
+
+            <button class="btn btn-primary"
+                    style="margin-top:12px"
+                    onclick="navigateTo('home-view')">
+                Continue as Guest
+            </button>
+
+        </section>
 
         <!-- HOME PAGE -->
         <section id="home-view" class="view-section active-section card">
@@ -711,33 +784,38 @@ hr {
 
                 <div class="form-group">
                     <label>Father's Full Name:</label>
-                    <input type="text" name="fatherName"
+                    <input type="text"
+                           name="fatherName"
                            placeholder="Last Name, First Name, M.I.">
                 </div>
 
                 <div class="form-group">
                     <label>Mother's Maiden Name:</label>
-                    <input type="text" name="motherName"
+                    <input type="text"
+                           name="motherName"
                            placeholder="Mother's Full Maiden Name"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label>Parent / Guardian Name:</label>
-                    <input type="text" name="guardianName"
+                    <input type="text"
+                           name="guardianName"
                            placeholder="Full Name of Primary Contact"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label>Parent/Guardian Occupation:</label>
-                    <input type="text" name="occupation"
+                    <input type="text"
+                           name="occupation"
                            placeholder="e.g. Farmer, Employee, Self-Employed">
                 </div>
 
                 <div class="form-group">
                     <label>Emergency Contact Number:</label>
-                    <input type="tel" name="contactNumber"
+                    <input type="tel"
+                           name="contactNumber"
                            placeholder="09XXXXXXXXX"
                            pattern="09[0-9]{9}"
                            maxlength="11"
@@ -769,14 +847,16 @@ hr {
 
                 <div class="form-group">
                     <label>Last School Attended:</label>
-                    <input type="text" name="lastSchool"
+                    <input type="text"
+                           name="lastSchool"
                            placeholder="Name of Previous School"
                            required>
                 </div>
 
                 <div class="form-group">
                     <label>Grade 9 General Average:</label>
-                    <input type="number" name="average"
+                    <input type="number"
+                           name="average"
                            step="0.1"
                            min="75"
                            max="100"
@@ -1026,6 +1106,7 @@ hr {
 /* STORAGE KEYS */
 const APPLICATIONS_KEY = "ahsGrade10Applications";
 const CURRENT_APPLICATION_KEY = "ahsCurrentApplicationId";
+const STUDENT_SESSION_KEY = "ahsStudentDemoSession";
 
 /* GET SAVED APPLICATIONS */
 function getApplications() {
@@ -1070,6 +1151,98 @@ function escapeHTML(value) {
         "'": "&#039;"
 
     })[character]);
+
+}
+
+/* UPDATE THE MENU ACCOUNT LABEL */
+function updateAccountMenu() {
+
+    const nameElement = document.getElementById("accountMenuName");
+    const roleElement = document.getElementById("accountMenuRole");
+    const logoutButton = document.getElementById("logoutMenuItem");
+    const avatarIcon = document.getElementById("accountAvatarIcon");
+
+    let student = null;
+
+    try {
+
+        student = JSON.parse(
+            localStorage.getItem(STUDENT_SESSION_KEY) || "null"
+        );
+
+    } catch (error) {
+
+        student = null;
+
+    }
+
+    if (student && student.name && student.lrn) {
+
+        nameElement.textContent = student.name;
+        roleElement.textContent = "Student Account";
+        logoutButton.style.display = "flex";
+        avatarIcon.className = "fa-solid fa-user";
+
+    } else {
+
+        nameElement.textContent = "Log in!";
+        roleElement.textContent = "Not signed in";
+        logoutButton.style.display = "none";
+        avatarIcon.className = "fa-solid fa-user-plus";
+
+    }
+
+}
+
+/* PORTAL SIGN IN DEMO */
+function handleLoginSubmit(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("loginStudentName").value.trim();
+    const lrn = document.getElementById("loginLrn").value.trim();
+
+    if (!name || !/^[0-9]{12}$/.test(lrn)) {
+
+        return;
+
+    }
+
+    try {
+
+        localStorage.setItem(
+            STUDENT_SESSION_KEY,
+            JSON.stringify({ name, lrn })
+        );
+
+    } catch (error) {
+
+        document.getElementById("loginStudentName").setCustomValidity(
+            "Your browser could not save the sign-in session. Please try again."
+        );
+
+        document.getElementById("loginStudentName").reportValidity();
+
+        document.getElementById("loginStudentName").setCustomValidity("");
+
+        return;
+
+    }
+
+    updateAccountMenu();
+
+    navigateTo("home-view");
+
+}
+
+/* LOG OUT OF THE LOCAL DEMO SESSION */
+function handleLogout() {
+
+    localStorage.removeItem(STUDENT_SESSION_KEY);
+
+    updateAccountMenu();
+
+    navigateTo("home-view");
 
 }
 
@@ -1479,6 +1652,7 @@ window.addEventListener("click", function(event) {
 /* INITIALIZE */
 document.addEventListener("DOMContentLoaded", function() {
 
+    updateAccountMenu();
     renderApplicationStatus();
 
 });
